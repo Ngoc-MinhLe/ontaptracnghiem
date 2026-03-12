@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện tập TMĐT trong du lịch - Đại học Hải Phòng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1000;
+            border-bottom: 2px solid #10b981;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .question-block {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid #e1e4e8;
+            transition: all 0.2s;
+        }
+        .option-item label {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: 0.2s;
+        }
+        .option-item label:hover { background-color: #f1f3f5; }
+        .option-item input:checked + span { color: #059669; font-weight: 600; }
+        .correct { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724; }
+        .wrong { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
+        .timer-box {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #dc3545;
+            padding: 8px 16px;
+            background: #fff5f5;
+            border: 1px solid #dc3545;
+            border-radius: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sticky-header py-4 px-6">
+    <div class="max-w-4xl mx-auto flex justify-between items-center">
+        <div>
+            <a href="index.html" class="inline-flex items-center text-emerald-600 hover:text-emerald-800 font-bold mb-2 transition-colors">
+                <i class="fas fa-chevron-left mr-2"></i> Quay lại trang chủ
+            </a>
+            <h1 class="text-xl font-bold text-gray-800 uppercase">Ôn tập: TMĐT trong du lịch</h1>
+        </div>
+        <div class="timer-box" id="timer">45:00</div>
+    </div>
+</div>
+
+<main class="max-w-4xl mx-auto p-6">
+    <div id="quiz-container">
+        <!-- Questions will load here -->
+    </div>
+
+    <button id="submit-btn" onclick="submitQuiz()" class="w-full bg-emerald-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-emerald-700 transition shadow-lg mt-8 text-center">
+        NỘP BÀI VÀ XEM ĐIỂM
+    </button>
+
+    <div id="result-summary" class="hidden mt-10 p-8 bg-emerald-50 rounded-2xl text-center border-2 border-emerald-200">
+        <h2 class="text-3xl font-bold text-emerald-900 mb-2">KẾT QUẢ CỦA BẠN</h2>
+        <div class="text-5xl font-black text-emerald-700 my-4" id="final-score">0/40</div>
+        <p class="text-gray-600 mb-6" id="score-comment"></p>
+        <button onclick="location.reload()" class="bg-orange-500 text-white px-8 py-3 rounded-lg font-bold hover:bg-orange-600 transition">
+            Làm đề khác
+        </button>
+    </div>
+</main>
+
+<script>
+    const bank = [
+        // CHƯƠNG 1 (20 CÂU)
+        {q: "Người đầu tiên dự đoán xã hội sẽ tiến đến làn sóng văn minh thứ 3 (kỷ nguyên mạng) là ai?", a: "B", o: ["Bill Gates", "Alvin Toffler", "Andrew Carnegie", "Henry Ford"]},
+        {q: "Khái niệm “Paperless trade” có nghĩa là:", a: "B", o: ["Thương mại truyền thống", "Thương mại không giấy tờ", "Thương mại công bằng", "Thương mại công nghiệp"]},
+        {q: "Theo WTO, thương mại điện tử bao gồm:", a: "A", o: ["Sản xuất, quảng cáo, bán hàng, phân phối sản phẩm trên Internet", "Chỉ mua bán qua email", "Chỉ phân phối hàng hóa số hóa", "Chỉ thanh toán qua thẻ tín dụng"]},
+        {q: "TMĐT được viết tắt bởi 4 chữ MSDP. Trong đó P là gì?", a: "B", o: ["Production", "Payment", "Promotion", "Partnership"]},
+        {q: "Giai đoạn đầu tiên trong quá trình phát triển TMĐT là gì?", a: "B", o: ["C-Business", "I-Commerce", "T-Commerce", "E-Business"]},
+        {q: "Một lợi ích nổi bật của TMĐT đối với người tiêu dùng là:", a: "C", o: ["Tăng chi phí mua hàng", "Khó tiếp cận hàng hóa", "Thuận tiện mua hàng mọi lúc mọi nơi", "Giảm tốc độ giao dịch"]},
+        {q: "Một hạn chế về thương mại của TMĐT là:", a: "A", o: ["Chi phí phát triển cao", "Giảm chi phí sản xuất", "Giao hàng nhanh chóng", "Giảm chi phí giấy tờ"]},
+        {q: "Theo Kalakota & Winston, TMĐT dưới góc độ CNTT là gì?", a: "B", o: ["Tự động hóa các giao dịch kinh doanh", "Cung cấp, phân phối thông tin, sản phẩm/dịch vụ, phương tiện thanh toán qua mạng", "Cắt giảm chi phí dịch vụ", "Hoạt động mua bán hàng hóa trực tiếp"]},
+        {q: "Một trong bốn yếu tố (4N) quan trọng trong phát triển TMĐT là:", a: "B", o: ["Năng lực", "Nhận thức", "Nghiệp vụ", "Nguồn vốn"]},
+        {q: "Lợi ích xã hội quan trọng của TMĐT là gì?", a: "B", o: ["Tăng chi phí vận tải", "Giảm sự đi lại", "Giảm tiêu chuẩn sống", "Hạn chế sản phẩm ở nông thôn"]},
+        {q: "Theo UNCTAD, TMĐT ở góc độ doanh nghiệp được tóm gọn bởi MSDP, trong đó D là gì?", a: "B", o: ["Delivery", "Distribution", "Development", "Digitalization"]},
+        {q: "Trong thương mại cộng tác (c-Business), CRM là viết tắt của:", a: "A", o: ["Customer Relationship Management", "Corporate Resource Market", "Consumer Retail Management", "Company Risk Management"]},
+        {q: "Ủy ban LHQ về luật thương mại quốc tế đưa ra Luật mẫu TMĐT năm nào?", a: "B", o: ["1981", "1996", "2000", "2010"]},
+        {q: "Ai là doanh nhân thế hệ thứ 3 tạo nên hạ tầng thông tin cho xã hội?", a: "A", o: ["Bill Gates, Michael Dell", "Jeff Bezos, Jerry Yang", "Andrew Carnegie, Rockefeller", "Henry Ford, Walt Disney"]},
+        {q: "Một hạn chế thương mại của TMĐT đối với khách hàng là:", a: "A", o: ["Không tin tưởng vào giao dịch không có chứng từ", "Tốc độ giao dịch nhanh", "Thông tin sản phẩm phong phú", "Giá cả cạnh tranh"]},
+        {q: "Theo luật Việt Nam, Luật Giao dịch điện tử có hiệu lực từ ngày nào?", a: "B", o: ["1/1/2005", "1/3/2006", "1/6/2006", "12/2007"]},
+        {q: "“Khung TMĐT toàn cầu” nhấn mạnh vai trò nào trong phát triển TMĐT?", a: "B", o: ["Chính phủ phải kiểm soát chặt chẽ", "Khu vực tư nhân phải dẫn đầu", "Internet phải tập trung quản lý", "Các rào cản pháp lý cần tăng cường"]},
+        {q: "Nghị định nào quy định về chữ ký số và dịch vụ chứng thực chữ ký số ở VN?", a: "B", o: ["57/2006/NĐ-CP", "26/2007/NĐ-CP", "27/2007/NĐ-CP", "35/2007/NĐ-CP"]},
+        {q: "Một trong những hạn chế thương mại của TMĐT là gì?", a: "A", o: ["Lỗi, gian lận trong giao dịch ngày càng nhiều", "Thời gian giao dịch ngắn", "Giảm chi phí sản xuất", "Mở rộng thị trường toàn cầu"]},
+        {q: "Một trong các lợi ích lớn của TMĐT đối với doanh nghiệp là:", a: "B", o: ["Chi phí đăng ký cao", "Cải thiện quy trình và tổ chức", "Khó cá nhân hóa dịch vụ", "Giảm lòng trung thành khách hàng"]},
+
+        // CHƯƠNG 2 (18 CÂU)
+        {q: "Mô hình B2B trong thương mại điện tử là gì?", a: "A", o: ["Doanh nghiệp với doanh nghiệp", "Doanh nghiệp với người tiêu dùng", "Người tiêu dùng với người tiêu dùng", "Doanh nghiệp với chính phủ"]},
+        {q: "Ví dụ nào sau đây thuộc mô hình B2C?", a: "A", o: ["Traveloka bán vé máy bay trực tuyến", "Chính phủ cung cấp dịch vụ công", "eBay cho phép người dân bán đồ cũ", "Hãng xe ký hợp đồng mua linh kiện"]},
+        {q: "Tiếp thị trực tiếp là gì?", a: "C", o: ["Qua trung gian", "Qua cửa hàng truyền thống", "Nhà sản xuất bán trực tiếp cho khách hàng qua Internet", "Qua đại lý"]},
+        {q: "Nhà môi giới điện tử có vai trò gì?", a: "B", o: ["Tạo sản phẩm mới", "Kết nối người mua và người bán", "Vận chuyển hàng hóa", "Kiểm tra chất lượng sản phẩm"]},
+        {q: "Ví dụ nào sau đây thuộc mô hình G2C?", a: "B", o: ["Doanh nghiệp đấu thầu công trình", "Người dân nộp thuế qua mạng", "Doanh nghiệp bán hàng", "Cửa hàng online"]},
+        {q: "Bán lẻ điện tử được hiểu là:", a: "A", o: ["Mua bán trực tuyến qua Internet", "Giao dịch tại chợ truyền thống", "Bán hàng qua điện thoại", "Giao dịch qua ngân hàng"]},
+        {q: "M-Commerce là viết tắt của:", a: "B", o: ["Mobile Communication", "Mobile Commerce", "Modern Commerce", "Management Commerce"]},
+        {q: "Trong B2B, “logistics” liên quan đến:", a: "B", o: ["Đặt hàng và thanh toán", "Quản lý hàng hóa, vận chuyển", "Thiết kế website", "Marketing trực tuyến"]},
+        {q: "Ví dụ nào thể hiện mô hình bên bán làm trung tâm?", a: "A", o: ["Doanh nghiệp thiết lập e-catalog cho khách hàng", "Doanh nghiệp đấu giá ngược", "Người mua ra giá", "Mua theo nhóm"]},
+        {q: "Mô hình B2G thường được ứng dụng trong lĩnh vực nào?", a: "B", o: ["Đặt vé du lịch", "Đấu thầu điện tử", "Bán hàng online", "Chứng khoán trực tuyến"]},
+        {q: "Hình thức “sản xuất theo yêu cầu” (Make-to-order) nghĩa là:", a: "B", o: ["Bán hàng sẵn có", "Sản xuất theo đơn đặt hàng của khách", "Mua qua trung gian", "Giao dịch trực tiếp"]},
+        {q: "Một trong các yếu tố tạo nên thành công trong bán lẻ điện tử là:", a: "B", o: ["Hạn chế sản phẩm", "Nhà cung cấp uy tín", "Cạnh tranh địa phương", "Tăng chi phí quảng cáo"]},
+        {q: "Mô hình nào kết hợp nhiều cửa hàng điện tử cùng bán hàng?", a: "B", o: ["Cổng thông tin", "Trung tâm mua sắm trực tuyến", "Cửa hàng ảo", "Marketing ảo"]},
+        {q: "Đặc điểm nổi bật của M-Commerce là:", a: "A", o: ["Thực hiện qua thiết bị di động", "Chỉ hoạt động qua website", "Không cần kết nối Internet", "Chỉ dùng cho doanh nghiệp lớn"]},
+        {q: "Lợi ích chính của mô hình cộng tác (Collaboration) trong B2B là:", a: "B", o: ["Tăng chi phí vận chuyển", "Giảm chu kỳ phát triển sản phẩm", "Giảm tương tác đối tác", "Tăng số lượng nhà cung cấp"]},
+        {q: "Ví dụ điển hình cho “Người kiến tạo thị trường” là:", a: "B", o: ["Amazon", "eBay", "Shopee", "Tiktok"]},
+        {q: "Trong B2C, yếu tố nào giúp tăng lòng trung thành của khách hàng?", a: "B", o: ["Quan hệ hữu hình", "Tính cam kết cộng tác (Cá nhân hóa)", "Cạnh tranh toàn cầu", "Giá bán thay đổi liên tục"]},
+        {q: "“Cổng cộng đồng và mạng xã hội” trong TMĐT có vai trò gì?", a: "B", o: ["Chỉ cung cấp sản phẩm", "Kết hợp thương mại với tương tác cộng đồng", "Quản lý kho hàng", "Thanh toán điện tử"]},
+
+        // CHƯƠNG 3 (24 CÂU)
+        {q: "Trong top 5 sàn TMĐT Việt Nam, sàn gốc Việt là:", a: "B", o: ["Shopee, Lazada", "Tiki, Sendo", "TikTok Shop, Shopee", "Agoda, Booking"]},
+        {q: "Xu hướng nào ngày càng tăng trong hành vi du lịch?", a: "B", o: ["Đặt tour trực tiếp tại văn phòng", "Đặt tour và khách sạn qua internet", "Mua tour bằng tiền mặt", "Gọi điện thoại đặt tour"]},
+        {q: "Hình thức thanh toán phổ biến nhất hiện nay ở Việt Nam là:", a: "C", o: ["Thẻ tín dụng", "Ví điện tử", "COD (thanh toán khi nhận hàng)", "QR Code"]},
+        {q: "Traveloka, Agoda, Booking.com thuộc loại hình nào?", a: "C", o: ["Website doanh nghiệp", "Ứng dụng ngân hàng", "Sàn giao dịch điện tử du lịch (OTA)", "Dịch vụ công trực tuyến"]},
+        {q: "Ví dụ về dịch vụ công trực tuyến du lịch là:", a: "B", o: ["Đặt vé máy bay", "E-visa, khai báo y tế điện tử", "Đặt tour qua Traveloka", "Đặt phòng khách sạn"]},
+        {q: "Theo MasterCard, ví điện tử là:", a: "B", o: ["Thẻ cứng chứa dữ liệu thanh toán", "Phần mềm lưu trữ và xử lý dữ liệu thanh toán cá nhân", "Tài khoản ngân hàng trực tuyến", "Ứng dụng rút tiền mặt"]},
+        {q: "“Không có niềm tin – không có giao dịch trực tuyến” thể hiện vai trò của:", a: "B", o: ["Marketing", "An toàn thương mại điện tử", "Dịch vụ khách hàng", "SEO"]},
+        {q: "Một website TMĐT hiệu quả cần có yếu tố nào?", a: "A", o: ["Giao diện thân thiện, dễ sử dụng", "Màu mè, phức tạp", "Không cần tương thích mobile", "Không cần nội dung rõ ràng"]},
+        {q: "Khi đánh giá website du lịch, yếu tố niềm tin khách hàng liên quan đến:", a: "A", o: ["Chứng nhận uy tín, đánh giá sao, liên kết đối tác", "Giá tour thấp", "Màu sắc bắt mắt", "Có nhiều quảng cáo"]},
+        {q: "Một yêu cầu quan trọng của hệ thống thanh toán di động là:", a: "A", o: ["Truyền tải dữ liệu thông suốt, liên tục", "Không cần xác thực", "Không cần mã hóa", "Chỉ dùng offline"]},
+        {q: "Mục tiêu chính của mã hóa thông tin là:", a: "B", o: ["Giảm dung lượng dữ liệu", "Đảm bảo an toàn và bảo mật dữ liệu", "Tăng tốc độ truyền", "Tự động nén tệp"]},
+        {q: "Trong TMĐT du lịch, “rủi ro công nghệ” là gì?", a: "B", o: ["Mất thông tin khách", "Virus, tấn công mạng, lỗi hệ thống", "Gian lận thẻ", "Vi phạm pháp luật"]},
+        {q: "“Tường lửa” có tác dụng:", a: "B", o: ["Tăng tốc Internet", "Ngăn truy cập trái phép", "Giảm bộ nhớ", "Lưu dữ liệu website"]},
+        {q: "Hệ thống thanh toán điện tử cần đảm bảo:", a: "A", o: ["Bí mật, an toàn, nhanh chóng, tiết kiệm", "Chỉ nhanh", "Chỉ rẻ", "Không cần bảo mật"]},
+        {q: "Phishing là gì?", a: "A", o: ["Lừa đảo trực tuyến giả mạo website uy tín", "Dịch vụ xác thực người dùng", "Tấn công DoS", "Bán hàng livestream"]},
+        {q: "Cơ quan phụ trách ứng cứu khẩn cấp máy tính tại Việt Nam là:", a: "A", o: ["VnCERT", "VNTrip", "VNPost", "VCCI"]},
+        {q: "Tấn công từ chối dịch vụ (DDoS) gây hậu quả chính là:", a: "B", o: ["Mất dữ liệu", "Quá tải, ngừng hoạt động website", "Rò rỉ mật khẩu", "Mất quyền truy cập admin"]},
+        {q: "Trong TMĐT du lịch, hợp đồng qua sàn giao dịch được ký giữa:", a: "B", o: ["Sàn và khách", "Doanh nghiệp cung cấp dịch vụ và khách du lịch", "Nhà mạng và khách", "Chính phủ và khách"]},
+        {q: "“Phong bì số” (Digital Envelope) sử dụng:", a: "A", o: ["Khóa công khai của người nhận", "Khóa bí mật của người gửi", "Mã OTP", "Mã QR"]},
+        {q: "“Chứng thư số hóa” giúp:", a: "B", o: ["Mã hóa hình ảnh", "Xác minh danh tính người giữ khóa công khai", "Gửi thư điện tử", "Nén dữ liệu"]},
+        {q: "Kẻ trộm trên mạng (Sniffer) có thể:", a: "A", o: ["Theo dõi, nghe lén thông tin truyền trên mạng", "Phát hiện virus", "Bảo vệ tường lửa", "Quản lý mật khẩu"]},
+        {q: "Kỹ thuật mã hóa “khoá đơn” còn gọi là:", a: "B", o: ["Mã hóa công khai", "Mã hóa đối xứng", "Mã hóa kép", "Mã hóa phân tán"]},
+        {q: "Một yếu tố quan trọng nhất trong xây dựng kế hoạch an ninh TMĐT là:", a: "A", o: ["Đánh giá tài sản và rủi ro", "Tăng quảng cáo", "Giảm chi phí", "Tự động hóa đơn"]},
+        {q: "Yêu cầu bảo mật quan trọng của thanh toán thẻ là gì?", a: "A", o: ["Xác thực chủ thẻ và mã hóa dữ liệu", "Chỉ cần mã hóa", "Chỉ cần ID", "Không cần mật khẩu"]},
+
+        // CHƯƠNG 4 (18 CÂU)
+        {q: "Marketing điện tử trong du lịch là gì?", a: "A", o: ["Sử dụng công nghệ Internet để xúc tiến, bán và phân phối sản phẩm du lịch", "Quảng cáo trên truyền hình", "Tổ chức sự kiện offline", "In tờ rơi du lịch"]},
+        {q: "Ưu điểm nổi bật của marketing điện tử trong du lịch là gì?", a: "B", o: ["Giới hạn thời gian", "Tốc độ giao dịch nhanh và phạm vi toàn cầu", "Khó tiếp cận khách hàng", "Tốn chi phí in ấn"]},
+        {q: "Marketing điện tử khác marketing truyền thống ở điểm nào?", a: "B", o: ["Mục tiêu doanh số", "Phương tiện thực hiện", "Cách định giá", "Khách hàng mục tiêu"]},
+        {q: "Trong mô hình AIDA, “Interest” thể hiện:", a: "B", o: ["Gợi sự chú ý", "Tạo hứng thú về sản phẩm du lịch", "Gọi hành động mua ngay", "Tạo phản hồi sau mua"]},
+        {q: "Ba giai đoạn phát triển của marketing điện tử gồm:", a: "B", o: ["Quảng cáo – Mua bán – Giao hàng", "Thông tin – Giao dịch – Tương tác", "Nghiên cứu – Sản xuất – Bán hàng", "Giao tiếp – Truyền thông – Bán lẻ"]},
+        {q: "Một ưu điểm nổi bật của marketing điện tử là:", a: "B", o: ["Phạm vi giới hạn", "Tự động hóa giao dịch", "Chi phí cao", "Thiếu tương tác"]},
+        {q: "Trong mô hình AIDA, “Action” thể hiện:", a: "A", o: ["Hành động mua hàng", "Giới thiệu thương hiệu", "Tìm kiếm thông tin", "Phản hồi sản phẩm"]},
+        {q: "Tiêu chí định vị sản phẩm trong TMĐT thường bổ sung thêm yếu tố:", a: "B", o: ["Sản phẩm nội địa", "Dịch vụ cá nhân hóa", "Kênh truyền thống", "Giá cố định"]},
+        {q: "Yếu tố giúp doanh nghiệp du lịch áp dụng thành công marketing điện tử là:", a: "A", o: ["Nhận thức và thói quen mua sắm trực tuyến của khách hàng", "Giá tour rẻ", "Tổ chức sự kiện offline", "Giảm số lượng sản phẩm"]},
+        {q: "Ưu điểm của phỏng vấn nhóm khách hàng qua mạng là:", a: "B", o: ["Chi phí cao", "Linh hoạt về thời gian và địa điểm", "Phải gặp trực tiếp", "Thiếu thông tin"]},
+        {q: "Công cụ nào giúp phân tích hành vi mua sắm trực tuyến?", a: "A", o: ["Phần mềm CRM tích hợp website", "Quảng cáo truyền hình", "Báo cáo tài chính", "Sách hướng dẫn"]},
+        {q: "Trong Email Marketing, mục tiêu quan trọng nhất đối với doanh nghiệp du lịch là:", a: "B", o: ["Giảm chi phí quảng cáo", "Duy trì và tăng tương tác với khách hàng", "Chỉ gửi email nội bộ", "Bán sản phẩm ngay lập tức"]},
+        {q: "Trong quy trình 6 bước Email Marketing, bước đầu tiên là:", a: "B", o: ["Tạo nội dung email", "Xác định mục tiêu chiến dịch", "Gửi email thử nghiệm", "Theo dõi kết quả"]},
+        {q: "Điểm khác biệt giữa marketing điện tử B2B và B2C là:", a: "A", o: ["B2B tập trung doanh nghiệp – B2C hướng đến người tiêu dùng", "Cả hai giống nhau", "B2B dùng email, B2C không dùng", "B2B chỉ hoạt động nội địa"]},
+        {q: "Trong hành vi khách hàng, giai đoạn “đánh giá lựa chọn” bị ảnh hưởng bởi:", a: "A", o: ["Thông tin so sánh, giá tour và đánh giá trực tuyến", "Gửi email giảm giá", "Hỗ trợ sau mua", "Thiết kế tour offline"]},
+        {q: "Ứng dụng TripAdvisor trong du lịch giúp người dùng:", a: "B", o: ["Dịch ngôn ngữ", "Đặt phòng, xem bản đồ, đọc đánh giá", "Kiểm tra bảo hiểm", "Tạo bưu thiếp"]},
+        {q: "Ứng dụng nào giúp khách du lịch dịch hội thoại nước ngoài không cần Internet?", a: "A", o: ["Speak & Translate", "Waygo", "Triplt", "City Maps 2Go"]},
+        {q: "Việc phân tích hành vi khách hàng qua mạng giúp doanh nghiệp:", a: "A", o: ["Hiểu rõ nhu cầu và điều chỉnh chiến lược sản phẩm", "Giảm chi phí quảng cáo", "Ngừng tương tác", "Tăng chi phí vận hành"]}
+    ];
+
+    let currentQuestions = [];
+    let timeLeft = 45 * 60; 
+    let timerInterval;
+
+    function initQuiz() {
+        // Lấy ngẫu nhiên 40 câu từ 80 câu
+        currentQuestions = [...bank].sort(() => 0.5 - Math.random()).slice(0, 40);
+        
+        const container = document.getElementById('quiz-container');
+        container.innerHTML = '';
+
+        currentQuestions.forEach((item, i) => {
+            const labels = ['A', 'B', 'C', 'D'];
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            block.id = `q-block-${i}`;
+            
+            let optionsHtml = '';
+            item.o.forEach((opt, idx) => {
+                optionsHtml += `
+                    <div class="option-item" id="opt-container-${i}-${labels[idx]}">
+                        <label>
+                            <input type="radio" name="q${i}" value="${labels[idx]}" class="mr-3">
+                            <span>${labels[idx]}. ${opt}</span>
+                        </label>
+                    </div>
+                `;
+            });
+
+            block.innerHTML = `
+                <p class="text-lg font-bold mb-4">Câu ${i+1}: ${item.q}</p>
+                <div class="options-list">${optionsHtml}</div>
+                <div id="correct-msg-${i}" class="hidden mt-3 font-bold text-emerald-600">Đáp án đúng: ${item.a}</div>
+            `;
+            container.innerHTML += block.outerHTML;
+        });
+
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitQuiz();
+            }
+            timeLeft--;
+        }, 1000);
+    }
+
+    function submitQuiz() {
+        clearInterval(timerInterval);
+        let score = 0;
+        
+        currentQuestions.forEach((item, i) => {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const correctMsg = document.getElementById(`correct-msg-${i}`);
+            
+            correctMsg.classList.remove('hidden');
+            
+            if (selected) {
+                const labelContainer = document.getElementById(`opt-container-${i}-${selected.value}`);
+                if (selected.value === item.a) {
+                    score++;
+                    labelContainer.classList.add('correct');
+                } else {
+                    labelContainer.classList.add('wrong');
+                }
+            }
+            document.getElementById(`opt-container-${i}-${item.a}`).classList.add('correct');
+        });
+
+        document.getElementById('submit-btn').classList.add('hidden');
+        document.getElementById('result-summary').classList.remove('hidden');
+        
+        const finalScore = (score / 40) * 10;
+        document.getElementById('final-score').innerText = `${score}/40`;
+        
+        let comment = "";
+        if (finalScore >= 8) comment = "Xuất sắc! Bạn nắm rất vững kiến thức TMĐT du lịch.";
+        else if (finalScore >= 5) comment = "Khá tốt! Hãy luyện tập thêm các phần mô hình kinh doanh và an ninh.";
+        else comment = "Bạn cần cố gắng nhiều hơn để vượt qua môn học này.";
+        
+        document.getElementById('score-comment').innerText = `${comment} (Điểm hệ 10: ${finalScore.toFixed(2)})`;
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>

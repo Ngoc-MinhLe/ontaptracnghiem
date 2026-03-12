@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện tập Trí tuệ nhân tạo - Đại học Hải Phòng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1000;
+            border-bottom: 2px solid #6d28d9;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .question-block {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid #e1e4e8;
+            transition: all 0.2s;
+        }
+        .option-item label {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: 0.2s;
+        }
+        .option-item label:hover { background-color: #f1f3f5; }
+        .option-item input:checked + span { color: #6d28d9; font-weight: 600; }
+        .correct { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724; }
+        .wrong { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
+        .timer-box {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #dc3545;
+            padding: 8px 16px;
+            background: #fff5f5;
+            border: 1px solid #dc3545;
+            border-radius: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sticky-header py-4 px-6">
+    <div class="max-w-4xl mx-auto flex justify-between items-center">
+        <div>
+            <a href="index.html" class="inline-flex items-center text-violet-600 hover:text-violet-800 font-bold mb-2 transition-colors">
+                <i class="fas fa-chevron-left mr-2"></i> Quay lại trang chủ
+            </a>
+            <h1 class="text-xl font-bold text-gray-800 uppercase">Ôn tập: Nhập môn Trí tuệ nhân tạo</h1>
+        </div>
+        <div class="timer-box" id="timer">45:00</div>
+    </div>
+</div>
+
+<main class="max-w-4xl mx-auto p-6">
+    <div id="quiz-container">
+        <!-- Questions load here -->
+    </div>
+
+    <button id="submit-btn" onclick="submitQuiz()" class="w-full bg-violet-700 text-white py-4 rounded-xl font-bold text-lg hover:bg-violet-800 transition shadow-lg mt-8 text-center">
+        NỘP BÀI VÀ XEM ĐIỂM
+    </button>
+
+    <div id="result-summary" class="hidden mt-10 p-8 bg-violet-50 rounded-2xl text-center border-2 border-violet-200">
+        <h2 class="text-3xl font-bold text-violet-900 mb-2">KẾT QUẢ CỦA BẠN</h2>
+        <div class="text-5xl font-black text-violet-700 my-4" id="final-score">0/40</div>
+        <p class="text-gray-600 mb-6" id="score-comment"></p>
+        <button onclick="location.reload()" class="bg-orange-500 text-white px-8 py-3 rounded-lg font-bold hover:bg-orange-600 transition">
+            Làm đề khác
+        </button>
+    </div>
+</main>
+
+<script>
+    const bank = [
+        // NHÓM A: NHẬN BIẾT/THÔNG HIỂU (32 CÂU)
+        {q: "Trí tuệ nhân tạo (Artificial Intelligence - AI) là gì?", a: "B", o: ["Một loại phần mềm máy tính", "Một lĩnh vực trong khoa học máy tính nghiên cứu hệ thống có khả năng thực hiện tác vụ yêu cầu trí tuệ con người", "Một loại phần cứng thông minh", "Một ngôn ngữ lập trình đặc biệt"]},
+        {q: "Mục tiêu chính của trí tuệ nhân tạo (AI) là gì?", a: "A", o: ["Phát triển các hệ thống có thể mô phỏng tư duy và hành vi của con người", "Tạo ra các trò chơi điện tử hấp dẫn hơn", "Tự động hóa quy trình sản xuất công nghiệp", "Dự báo thời tiết"]},
+        {q: "Khái niệm “Trí tuệ nhân tạo” lần đầu tiên được đưa ra ở đâu?", a: "C", o: ["Đại học Harvard", "Viện Công nghệ Massachusetts (MIT)", "Hội nghị Dartmouth năm 1956", "Đại học Stanford"]},
+        {q: "Ai là người đầu tiên đề xuất thuật ngữ “Trí tuệ nhân tạo” (AI)?", a: "D", o: ["Alan Turing", "Marvin Minsky", "IBM Watson", "John McCarthy"]},
+        {q: "Các thành phần cốt lõi của một hệ thống AI là gì?", a: "A", o: ["Dữ liệu, con người, phần cứng, phần mềm, quy trình", "Dữ liệu, con người, phần cứng, phần mềm", "Dữ liệu, con người, phần cứng", "Dữ liệu, con người"]},
+        {q: "Lĩnh vực nào sau đây KHÔNG phải là ứng dụng phổ biến của AI?", a: "C", o: ["Xử lý ngôn ngữ tự nhiên", "Thị giác máy tính", "Điều khiển điều hòa nhiệt độ cơ học đơn giản", "Nhận diện giọng nói"]},
+        {q: "Chiến lược tìm kiếm mù là gì?", a: "B", o: ["Phương pháp tìm kiếm có sử dụng thông tin đích", "Phương pháp tìm kiếm không sử dụng bất kỳ thông tin nào về trạng thái đích", "Phương pháp sử dụng hàm đánh giá dẫn hướng", "Phương pháp luôn tìm ra giải pháp tối ưu"]},
+        {q: "Trong tìm kiếm theo chiều rộng (BFS), nút nào sẽ được mở rộng trước?", a: "B", o: ["Nút có độ sâu lớn nhất", "Nút có độ sâu nhỏ nhất", "Nút có giá trị hàm đánh giá thấp nhất", "Nút được chọn ngẫu nhiên"]},
+        {q: "DFS sử dụng cấu trúc dữ liệu nào để lưu trữ danh sách trạng thái?", a: "B", o: ["Hàng đợi (Queue)", "Ngăn xếp (Stack)", "Danh sách liên kết", "Cây tìm kiếm"]},
+        {q: "Trong trí tuệ nhân tạo, tìm kiếm là gì?", a: "D", o: ["Quá trình thu thập dữ liệu Internet", "Quá trình lựa chọn thuật toán phù hợp", "Quá trình tạo dữ liệu mới", "Quá trình duyệt qua không gian trạng thái để tìm lời giải"]},
+        {q: "BFS sử dụng cấu trúc dữ liệu nào để lưu trữ danh sách trạng thái?", a: "A", o: ["Hàng đợi (Queue)", "Ngăn xếp (Stack)", "Danh sách liên kết", "Cây tìm kiếm"]},
+        {q: "Đáp án nào đúng với giải thuật tìm kiếm theo chiều rộng (BFS)?", a: "C", o: ["Duyệt tất cả các đỉnh", "Duyệt một nửa số đỉnh", "Chỉ duyệt đỉnh đầu của đồ thị", "Chỉ duyệt đỉnh cuối của đồ thị"]},
+        {q: "Chiến lược tìm kiếm có kinh nghiệm (Heuristic Search) là gì?", a: "B", o: ["Phương pháp không sử dụng thông tin bổ sung", "Phương pháp sử dụng thông tin ước lượng để dẫn hướng", "Phương pháp luôn đảm bảo tìm lời giải tối ưu nhanh nhất", "Phương pháp chỉ áp dụng trên đồ thị không chu trình"]},
+        {q: "Thuật toán nào sau đây KHÔNG phải là tìm kiếm có kinh nghiệm?", a: "A", o: ["Tìm kiếm theo chiều rộng (BFS)", "Tìm kiếm tham lam (Greedy)", "Tìm kiếm A*", "Tìm kiếm Beam Search"]},
+        {q: "Nếu dùng hàm heuristic kém chính xác, điều gì xảy ra?", a: "B", o: ["Thuật toán luôn tìm ra giải pháp tối ưu", "Thuật toán có thể đi sai hướng và cho kết quả không tối ưu", "Thuật toán sẽ nhanh hơn", "Không ảnh hưởng"]},
+        {q: "Thông tin luật đánh giá heuristic được biểu hiện dưới dạng gì?", a: "D", o: ["For", "Loop", "While", "If - Then"]},
+        {q: "Thuật toán Minimax thường dùng trong loại bài toán nào?", a: "C", o: ["Tìm đường đi ngắn nhất", "Nhiều người chơi độc lập", "Hai người chơi đối kháng", "Dự đoán xu hướng thời gian"]},
+        {q: "Giá trị Alpha trong cắt tỉa Alpha-Beta đại diện cho điều gì?", a: "A", o: ["Lợi ích tối đa người chơi hiện tại có thể đạt được", "Lợi ích tối đa người chơi đối thủ đạt được", "Chi phí tối thiểu đối thủ đạt được", "Chi phí tối thiểu người chơi hiện tại đạt được"]},
+        {q: "Thuật toán cắt tỉa Alpha-Beta được sử dụng để làm gì?", a: "B", o: ["Cải thiện độ chính xác Minimax", "Loại bỏ nhánh không cần thiết để tăng tốc", "Tăng số lượng nút duyệt", "Chọn nước đi dựa trên xác suất"]},
+        {q: "Giá trị Beta trong cắt tỉa Alpha-Beta đại diện cho điều gì?", a: "B", o: ["Lợi ích tối đa người chơi MAX đảm bảo", "Lợi ích tối đa người chơi MIN (đối thủ) đảm bảo", "Lợi ích tối thiểu MAX bị ép nhận", "Giá trị heuristic ước lượng chi phí"]},
+        {q: "Biểu diễn tri thức trong AI nhằm mục đích gì?", a: "B", o: ["Máy có thể hiểu", "Máy có thể hiểu và suy luận", "Máy có suy luận", "Lưu trữ dữ liệu không suy luận"]},
+        {q: "Các phương pháp chính để biểu diễn tri thức bao gồm:", a: "A", o: ["Logic mệnh đề; Logic vị từ; Khung; Luật sản xuất; Mạng ngữ nghĩa", "Chỉ Logic mệnh đề và vị từ", "Chỉ mạng ngữ nghĩa và khung", "Chỉ luật sản xuất và khung"]},
+        {q: "Toán logic vị từ là gì?", a: "A", o: ["Hệ thống logic sử dụng biến, lượng từ và vị từ", "Không phải phần của toán logic", "Không mở rộng từ logic mệnh đề", "Kỹ thuật giải phương trình vi phân"]},
+        {q: "Biểu diễn tri thức bằng logic mệnh đề sử dụng thành phần nào chính?", a: "B", o: ["Đối tượng và mối quan hệ", "Mệnh đề có giá trị đúng hoặc sai", "Cây quyết định", "Biểu đồ trạng thái"]},
+        {q: "Trong hệ thống luật sản xuất, một luật có dạng như thế nào?", a: "A", o: ["IF (điều kiện) THEN (hành động)", "IF (hành động) THEN (điều kiện)", "Kết luận -> Điều kiện", "Mệnh đề đúng/sai"]},
+        {q: "Phương pháp nào KHÔNG phải là biểu diễn tri thức?", a: "D", o: ["Logic mệnh đề", "Logic vị từ", "Mạng ngữ nghĩa", "Học máy (Machine Learning)"]},
+        {q: "Cấu trúc chương trình Prolog gồm mấy phần?", a: "B", o: ["1 phần: truy vấn", "2 phần: cơ sở tri thức và truy vấn", "3 phần: nhập, xử lý, xuất", "2 phần: khai báo biến và hàm"]},
+        {q: "Trong Prolog, toán tử nào được sử dụng để truy vấn?", a: "B", o: ["=", "?-", ":", "->"]},
+        {q: "Trong Prolog, dữ liệu được biểu diễn dưới dạng nào?", a: "A", o: ["Mệnh đề (Clause)", "Hàm (Function)", "Biểu thức", "Danh sách"]},
+        {q: "Prolog là ngôn ngữ dựa trên mô hình nào?", a: "C", o: ["Hướng đối tượng", "Tuyến tính", "Lập trình logic", "Cấu trúc"]},
+        {q: "Prolog là viết tắt của cụm từ nào?", a: "A", o: ["Programming in Logic", "Process Logic", "Proactive Logic", "Professional Logic"]},
+        {q: "Truy vấn (query) trong Prolog kết thúc bằng dấu gì?", a: "B", o: [";", ".", ":", "?"]},
+
+        // NHÓM B: VẬN DỤNG (32 CÂU)
+        {q: "Máy học (Machine Learning - ML) là gì?", a: "A", o: ["Chương trình có khả năng học hỏi và cải thiện hiệu suất theo thời gian", "Thuật toán tăng tốc xử lý", "Kỹ thuật lập trình truyền thống", "Một loại mạng thần kinh"]},
+        {q: "IBM Watson (2006) sử dụng công nghệ nào là chính?", a: "C", o: ["Thị giác máy tính", "Mạng nơ-ron", "Xử lý ngôn ngữ tự nhiên (NLP)", "Người máy"]},
+        {q: "AI có thể phân thành mấy loại chính (theo khả năng)?", a: "B", o: ["Máy phản ứng; Trí nhớ hạn chế", "Phản ứng; Trí nhớ hạn chế; Lý thuyết tâm trí; Tự nhận thức", "Lý thuyết tâm trí; Tự nhận thức", "Trí nhớ hạn chế; Tự nhận thức"]},
+        {q: "Trí tuệ nhân tạo siêu việt (ASI) là gì?", a: "A", o: ["Hệ thống vượt qua trí tuệ con người trên mọi lĩnh vực", "AI yếu thực hiện nhiệm vụ cụ thể", "Hệ thống chỉ có trong viễn tưởng", "Thuật toán ML mới nhất"]},
+        {q: "Phương pháp nào KHÔNG phải là tìm kiếm mù?", a: "C", o: ["BFS", "DFS", "Tìm kiếm tham lam (Greedy)", "Lặp sâu dần (IDS)"]},
+        {q: "Ưu điểm của BFS so với DFS là gì?", a: "A", o: ["Luôn tìm được lời giải và đảm bảo tối ưu (ngắn nhất)", "Sử dụng ít bộ nhớ hơn", "Không cần lưu trạng thái đã duyệt", "Không dùng cấu trúc dữ liệu bổ sung"]},
+        {q: "Nhược điểm chính của tìm kiếm theo chiều sâu (DFS) là gì?", a: "B", o: ["Tốn nhiều bộ nhớ hơn BFS", "Không đảm bảo tối ưu và có thể rơi vào vòng lặp vô hạn", "Luôn tìm ra giải pháp tối ưu", "Chậm hơn BFS trong mọi trường hợp"]},
+        {q: "Nhánh cận tìm kiếm thuật toán là một dạng tiến trình giải thuật nào?", a: "A", o: ["Giải thuật quay lui", "Giải pháp leo dốc", "Giải thuật tham lam", "Giải pháp leo ngẫu nhiên"]},
+        {q: "Đâu KHÔNG phải ứng dụng của BFS?", a: "D", o: ["Tìm đường đi ngắn nhất", "Tìm thành phần liên thông", "Tìm đỉnh cao trong liên kết", "Tìm kiếm có giới hạn"]},
+        {q: "Chế độ chính của giải thuật tìm kiếm độ sâu tăng dần là gì?", a: "C", o: ["Không lặp lại công việc giai đoạn trước", "Lặp lại nửa công việc", "Lặp lại tất cả công việc giai đoạn trước", "Lặp lại tất cả giai đoạn sau"]},
+        {q: "Tại sao nên sử dụng thuật giải heuristic trong giải quyết bài toán?", a: "C", o: ["Đảm bảo tìm lời giải tối ưu tuyệt đối", "Giúp tăng không gian tìm kiếm", "Nhanh chóng, dễ dàng đưa ra kết quả với chi phí thấp", "Đảm bảo nhanh hơn vét cạn"]},
+        {q: "Thuật heuristic có thể giải thích được vì lý do nào?", a: "A", o: ["Sử dụng kiến thức chuyên gia dạng luật rõ ràng", "Dựa trên mô hình xác suất phức tạp", "Dựa trên thử sai kiểm tra mọi khả năng", "Hoàn toàn dựa vào máy học không cần giải thích"]},
+        {q: "Trong thuật toán A*, công thức đánh giá tổng chi phí là gì?", a: "C", o: ["f(n) = g(n)", "f(n) = h(n)", "f(n) = g(n) + h(n)", "f(n) = g(n) * h(n)"]},
+        {q: "Đâu là đáp án đúng về giải thuật đồ thị AND-OR?", a: "A", o: ["Dùng giải bài toán phân rẽ AND và OR", "Chỉ áp dụng cấu trúc tuyến tính", "Luôn nhanh hơn A*", "Không áp dụng được trong hệ chuyên gia"]},
+        {q: "Trong cờ vua, cờ caro... thuật toán nào thường dùng nhất?", a: "B", o: ["Dijkstra", "Minimax kết hợp cắt tỉa Alpha-Beta", "BFS", "A*"]},
+        {q: "Đâu là câu trả lời đúng khi nói về giải thuật A*?", a: "B", o: ["Không bao giờ dùng heuristic", "Đảm bảo tối ưu nếu heuristic là chấp nhận được (admissible)", "Chỉ hoạt động đồ thị không chu trình", "Không quan tâm chi phí bắt đầu"]},
+        {q: "Tại sao cắt tỉa Alpha-Beta cải thiện hiệu suất Minimax?", a: "B", o: ["Kiểm tra tất cả các nút", "Giảm số lượng trạng thái bằng cách loại bỏ nhánh không cần thiết", "Chọn nước đi ngẫu nhiên", "Ưu tiên nước đi điểm cao trước"]},
+        {q: "Giải pháp nào dùng chung Minimax để giảm trạng thái không gian?", a: "C", o: ["Beam Search", "DFS", "Cắt tỉa Alpha-Beta", "Heuristic Search"]},
+        {q: "Trong trò chơi hai người có tổng bằng 0, mục tiêu của Minimax là:", a: "C", o: ["Tối đa hóa điểm đối thủ", "Tối thiểu điểm của mình", "Tối đa hóa điểm mình và tối thiểu hóa điểm đối thủ", "Ngẫu nhiên chọn nước đi"]},
+        {q: "Lợi ích chính của Alpha-Beta so với Minimax là:", a: "B", o: ["Chính xác hơn", "Thực hiện nhanh hơn", "Không cần heuristic", "Không sử dụng đệ quy"]},
+        {q: "Tam đoạn luận: 'Chào mào thích ăn hạt kê; chào mào là chim; mọi loài chim thích ăn hạt kê' đúng hay sai?", a: "D", o: ["Đúng, vì tiền đề đúng", "Sai, vì không phải loài chim nào cũng thích hạt kê", "Sai, vì hai tiền đề khẳng định", "Đúng, theo quy tắc tam đoạn luận đơn"]},
+        {q: "Phán đoán tương đương 'Nếu không tham ô thì không bị cách chức và không bị truy tố'?", a: "A", o: ["Nếu bị truy tố hay cách chức thì đã tham ô", "Nếu tham ô thì bị cách chức hoặc truy tố", "Nếu tham ô thì bị cách chức hay truy tố", "Vẫn có chuyện tham ô mà không bị cách chức"]},
+        {q: "Xác định S và P của: 'Họ biết rằng chúng tôi rất vui vẻ'?", a: "A", o: ["S = Họ ; P = người biết rằng chúng tôi rất vui vẻ", "S = Họ biết rằng ; P = chúng tôi rất vui vẻ", "S = Họ ; P = chúng tôi", "S = Họ ; P = chúng tôi rất vui vẻ"]},
+        {q: "Tiền đề 'Có sinh viên nghiên cứu khoa học giỏi', kết luận đổi chỗ hợp logic là gì?", a: "D", o: ["Có sinh viên không biết nghiên cứu", "Có sinh viên nghiên cứu dở", "Không phải tất cả đều dở", "Có những người nghiên cứu khoa học rất giỏi là sinh viên"]},
+        {q: "Mệnh đề 'Nếu trời mưa thì đường trơn' biểu diễn là:", a: "B", o: ["Mưa ∧ Trơn", "Mưa → Trơn", "Trơn → Mưa", "¬Mưa ∨ Trơn"]},
+        {q: "Trong logic vị từ, ký hiệu ∀x P(x) có nghĩa là:", a: "B", o: ["Có ít nhất một x sao cho P(x) đúng", "Với mọi x thì P(x) đúng", "Không có x nào thỏa mãn", "P(x) sai với mọi x"]},
+        {q: "Trong Turbo Prolog, đối tượng dữ liệu gồm những loại nào?", a: "D", o: ["Số nguyên tố, biến", "Hằng số, biến", "Hằng số, cấu trúc", "Số nguyên tố, số, biến, cấu trúc"]},
+        {q: "Cấu trúc cơ bản của một luật (rule) trong Prolog là gì?", a: "A", o: ["Head :- Body.", "if Head then Body.", "Body -> Head.", "Head = Body."]},
+        {q: "Nếu parent(john, mary) và parent(alex, john), ?- parent(X, mary) trả về gì?", a: "A", o: ["X = john", "X = mary", "X = parent", "X = alex"]},
+        {q: "Nếu parent(john, Sophia), parent(Isabella, Sophia), woman(Isabella), woman(Sophia), ?- mother(X, Sophia) trả về gì?", a: "D", o: ["X = john", "X = woman", "X = Sophia", "X = Isabella"]},
+        {q: "Làm sao biểu diễn quan hệ chú bác của một người trong Prolog?", a: "A", o: ["Là anh em của cha mẹ mình", "Trên mình một bậc", "Trên mình một bậc trên gia phả", "Là anh em ruột của cha mẹ mình"]},
+        {q: "Dấu :- trong Prolog có ý nghĩa gì?", a: "B", o: ["Gán giá trị", "Tách phần đầu và phần thân của quy tắc", "Bắt đầu truy vấn", "Gọi một hàm"]},
+
+        // NHÓM C: PHÂN TÍCH/TỔNG HỢP (16 CÂU)
+        {q: "Chiến lược nào sử dụng mức giới hạn độ sâu để tránh đi quá xa?", a: "C", o: ["BFS", "DFS", "Tìm kiếm giới hạn độ sâu (DLS)", "Tham lam"]},
+        {q: "Để BFS không rơi vào vòng lặp vô hạn trong đồ thị có chu trình, cần làm gì?", a: "B", o: ["Dùng hàng đợi lưu nút mở rộng", "Dùng danh sách lưu các nút đã thăm", "Ưu tiên độ sâu nhỏ nhất", "Mở rộng lại nút cũ"]},
+        {q: "Ưu điểm chính của tìm kiếm có kinh nghiệm so với tìm kiếm mù là gì?", a: "C", o: ["Luôn tối ưu", "Luôn nhanh hơn", "Tận dụng thông tin bổ sung để tìm kiếm hiệu quả", "Không tốn thêm bộ nhớ"]},
+        {q: "Điều kiện đảm bảo A* tìm ra đường đi tối ưu?", a: "C", o: ["H(n) luôn âm", "H(n) đánh giá chính xác", "H(n) không đánh giá cao hơn chi phí thực tế", "A* kiểm tra ít nút nhất"]},
+        {q: "Điều gì xảy ra nếu Minimax dùng hàm heuristic không chính xác?", a: "B", o: ["Trò chơi kết thúc nhanh hơn", "Người chơi chọn nước đi không tối ưu", "Không đưa ra quyết định", "Không bị ảnh hưởng"]},
+        {q: "Giải thuật tìm kiếm tốt nhất kết hợp 2 ưu tiên của giải thuật nào?", a: "B", o: ["A* và Minimax", "Chi phí đồng nhất và Heuristic", "Dijkstra và Alpha-Beta", "DFS và BFS"]},
+        {q: "Khi nào một nhánh được 'prune' (cắt) trong Alpha-Beta?", a: "A", o: ["Alpha >= Beta", "Alpha < Beta", "Tìm thấy nút lá", "Hết nước đi"]},
+        {q: "Hạn chế lớn nhất của Minimax khi KHÔNG dùng Alpha-Beta?", a: "C", o: ["Không đảm bảo đúng", "Không áp dụng được luật phức tạp", "Yêu cầu đánh giá tất cả các nhánh đến độ sâu tối đa", "Chạy sai nếu ngẫu nhiên"]},
+        {q: "Tuyên bố 'Có ít nhất một người thích bóng đá' viết trong logic vị từ là:", a: "B", o: ["∀x Likes(x, Football)", "∃x Likes(x, Football)", "∀x ¬Likes(x, Football)", "∃x ¬Likes(x, Football)"]},
+        {q: "P='Minh hát hay', Q='Minh đàn giỏi', R='Minh đẹp trai'. Minh hát hay, đàn giỏi, đẹp trai biểu diễn là:", a: "C", o: ["P Q R", "P ∨ Q ∨ R", "P ∧ Q ∧ R", "P -> Q -> R"]},
+        {q: "Biểu thức 'Mọi người đều yêu thích âm nhạc' là:", a: "B", o: ["∃x Person(x) ∧ Likes(x, Music)", "∀x (Person(x) -> Likes(x, Music))", "∃x (Person(x) -> Likes(x, Music))", "∀x (Likes(x, Music) -> Person(x))"]},
+        {q: "Phát biểu 'Mọi sinh viên đều học ít nhất một môn học' biểu diễn đúng là:", a: "A", o: ["∀x (SV(x) -> ∃y Monhoc(y) ∧ Hoc(x, y))", "∃x (SV(x) ∧ ∀y Monhoc(y) -> Hoc(x, y))", "∀x ∃y (SV(x) ∧ Monhoc(y) ∧ Hoc(x, y))", "∃x ∃y (SV(x) ∧ Monhoc(y) ∧ Hoc(x, y))"]},
+        {q: "Sự kiện: 'It is summer', 'It is sunny'. Truy vấn nào cho câu trả lời 'Yes'?", a: "D", o: ["It is cold", "It is snowing", "It is raining", "It is hot (vì là mùa hè nên nóng)"]},
+        {q: "Dựa vào các điều kiện Prolog đã cho, câu hỏi nào trả về 'No'?", a: "C", o: ["?-dark(X), thick(X)", "?-brown(X), thick(X)", "?-grey(X), small(X)", "?-dark(X), small(X)"]},
+        {q: "Câu nào là sự thật (fact) hợp lệ trong Prolog?", a: "A", o: ["loves(anna, pizza).", "anna = pizza.", "if anna loves pizza.", "loves anna pizza."]},
+        {q: "Câu nào là một quy tắc (rule) hợp lệ trong Prolog?", a: "A", o: ["parent(X, Y) :- mother(X, Y).", ":- parent(X, Y), mother(X, Y).", "parent(X, Y) = mother(X, Y).", "rule(parent(X,Y), mother(X,Y))."]}
+    ];
+
+    let currentQuestions = [];
+    let timeLeft = 45 * 60; // 45 phút theo yêu cầu file docx
+    let timerInterval;
+
+    function initQuiz() {
+        // Lấy ngẫu nhiên 40 câu từ 80 câu (theo quy trình tổ hợp đề thi)
+        currentQuestions = [...bank].sort(() => 0.5 - Math.random()).slice(0, 40);
+        
+        const container = document.getElementById('quiz-container');
+        container.innerHTML = '';
+
+        currentQuestions.forEach((item, i) => {
+            const labels = ['A', 'B', 'C', 'D'];
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            block.id = `q-block-${i}`;
+            
+            let optionsHtml = '';
+            item.o.forEach((opt, idx) => {
+                optionsHtml += `
+                    <div class="option-item" id="opt-container-${i}-${labels[idx]}">
+                        <label>
+                            <input type="radio" name="q${i}" value="${labels[idx]}" class="mr-3">
+                            <span>${labels[idx]}. ${opt}</span>
+                        </label>
+                    </div>
+                `;
+            });
+
+            block.innerHTML = `
+                <p class="text-lg font-bold mb-4">Câu ${i+1}: ${item.q}</p>
+                <div class="options-list">${optionsHtml}</div>
+                <div id="correct-msg-${i}" class="hidden mt-3 font-bold text-green-600">Đáp án đúng: ${item.a}</div>
+            `;
+            container.innerHTML += block.outerHTML;
+        });
+
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitQuiz();
+            }
+            timeLeft--;
+        }, 1000);
+    }
+
+    function submitQuiz() {
+        clearInterval(timerInterval);
+        let score = 0;
+        
+        currentQuestions.forEach((item, i) => {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const correctMsg = document.getElementById(`correct-msg-${i}`);
+            
+            correctMsg.classList.remove('hidden');
+            
+            if (selected) {
+                const labelContainer = document.getElementById(`opt-container-${i}-${selected.value}`);
+                if (selected.value === item.a) {
+                    score++;
+                    labelContainer.classList.add('correct');
+                } else {
+                    labelContainer.classList.add('wrong');
+                }
+            }
+            document.getElementById(`opt-container-${i}-${item.a}`).classList.add('correct');
+        });
+
+        document.getElementById('submit-btn').classList.add('hidden');
+        document.getElementById('result-summary').classList.remove('hidden');
+        
+        const finalScore = (score / 40) * 10;
+        document.getElementById('final-score').innerText = `${score}/40`;
+        
+        let comment = "";
+        if (finalScore >= 8) comment = "Rất tốt! Bạn nắm vững kiến thức AI.";
+        else if (finalScore >= 5) comment = "Đã đạt! Hãy ôn tập thêm các phần tìm kiếm và Prolog.";
+        else comment = "Bạn cần cố gắng nhiều hơn để vượt qua kỳ thi.";
+        
+        document.getElementById('score-comment').innerText = `${comment} (Điểm số: ${finalScore.toFixed(2)})`;
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
