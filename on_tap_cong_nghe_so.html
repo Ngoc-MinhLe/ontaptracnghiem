@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn tập Công nghệ số - Đại học Hải Phòng</title>
+    <style>
+        :root {
+            --primary-color: #004a99;
+            --secondary-color: #f8f9fa;
+            --accent-color: #ff9800;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
+
+        .header h1 { color: var(--primary-color); margin: 0; font-size: 24px; }
+        .header h2 { font-size: 18px; margin: 10px 0; color: #555; }
+
+        .sticky-bar {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .timer {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--danger-color);
+            background: #fff5f5;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid var(--danger-color);
+        }
+
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 10px;
+        }
+
+        .option-item label {
+            display: block;
+            padding: 12px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-item label:hover {
+            background-color: #f1f3f5;
+            border-color: var(--primary-color);
+        }
+
+        .option-item input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        /* Styling for results */
+        .option-item.correct label {
+            background-color: #d4edda !important;
+            border-color: #28a745 !important;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .option-item.wrong label {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #721c24;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #003366;
+        }
+
+        #result-summary {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            background: #e7f3ff;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            font-size: 32px;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 15px; margin: 10px; }
+            .sticky-bar { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>TRƯỜNG ĐẠI HỌC HẢI PHÒNG</h1>
+        <h2>Học phần: Công nghệ số (INF762)</h2>
+        <p><i>Hệ thống ôn luyện ngẫu nhiên 20 câu hỏi từ ngân hàng 120 câu</i></p>
+    </div>
+
+    <div class="sticky-bar">
+        <div id="progress">Tiến độ: 0/20</div>
+        <div class="timer" id="timer">20:00</div>
+    </div>
+
+    <div id="quiz-area">
+        <!-- Questions will be injected here -->
+    </div>
+
+    <div id="result-summary">
+        <div class="score-circle" id="score-val">0</div>
+        <h3 id="score-text">Bạn đã hoàn thành bài thi!</h3>
+        <p id="detail-text"></p>
+        <button class="btn-submit" onclick="location.reload()" style="background: var(--accent-color);">Làm đề mới</button>
+    </div>
+
+    <button class="btn-submit" id="submit-btn" onclick="gradeQuiz()">Nộp Bài</button>
+</div>
+
+<script>
+    const allQuestions = [
+        // CHƯƠNG 1
+        {q: "Khái niệm “xã hội số” chủ yếu tập trung vào khía cạnh nào sau đây?", a: "B", o: ["Công nghiệp 4.0 và AI.", "Công dân số và văn hóa số.", "Hệ thống giao thông thông minh.", "Toàn bộ nền kinh tế toàn cầu."]},
+        {q: "Khái niệm “công dân số” được hiểu như thế nào trong bối cảnh hiện nay?", a: "C", o: ["Người chỉ dùng điện thoại thông minh.", "Người am hiểu kỹ thuật phần cứng.", "Người tham gia có trách nhiệm, tích cực, an toàn và hiệu quả trong môi trường số.", "Người có nhiều tài khoản mạng xã hội."]},
+        {q: "Theo Khung năng lực số DigComp của EU, có bao nhiêu lĩnh vực năng lực số chính?", a: "B", o: ["3", "5", "7", "10"]},
+        {q: "Theo Thông tư số 02/2025/TT-BGDĐT, khung năng lực số của nhà giáo nhằm mục tiêu chính là gì?", a: "C", o: ["Tăng cường khả năng sử dụng máy tính.", "Chuẩn hóa kỹ năng tin học cơ bản.", "Phát triển năng lực ứng dụng công nghệ số trong dạy học, đánh giá.", "Đào tạo giáo viên thành chuyên gia lập trình."]},
+        {q: "Theo đề xuất của UNESCO, khung năng lực số được chia thành bao nhiêu nhóm năng lực chính?", a: "B", o: ["5", "7", "9", "10"]},
+        {q: "Trong Khung năng lực số của UNESCO, nhóm “Giao tiếp và hợp tác số” nhấn mạnh điều gì?", a: "B", o: ["Viết mã máy tính.", "Sử dụng công cụ số để giao tiếp, cộng tác, tham gia cộng đồng.", "Tự động hóa sản xuất.", "Tăng tốc độ mạng."]},
+        {q: "Theo Thông tư số 02/2025/TT-BGDĐT, Khung năng lực số được áp dụng cho đối tượng nào?", a: "C", o: ["Chỉ học sinh THPT.", "Chỉ sinh viên đại học.", "Tất cả người học trong hệ thống giáo dục quốc dân.", "Chỉ cán bộ quản lý giáo dục."]},
+        {q: "Khái niệm ‘dấu chân số’ được hiểu là gì?", a: "B", o: ["Kích thước màn hình.", "Dấu vết thông tin người dùng để lại khi tham gia môi trường số.", "Tập tin hệ thống.", "Đo lường dung lượng bộ nhớ."]},
+        {q: "Để trở thành công dân số có trách nhiệm, mỗi cá nhân cần rèn luyện kỹ năng nào?", a: "A", o: ["Bảo vệ quyền riêng tư và dữ liệu cá nhân.", "Sử dụng càng nhiều tài khoản càng tốt.", "Đăng tải thông tin không kiểm chứng.", "Chia sẻ mật khẩu."]},
+        {q: "Một trong những lợi ích của năng lực số đối với sinh viên là?", a: "B", o: ["Giảm thi cử.", "Tăng khả năng học tập, nghiên cứu, hội nhập nghề nghiệp.", "Thoát khỏi Internet.", "Loại bỏ việc viết báo cáo."]},
+        {q: "Theo Thông tư số 02/2025/TT-BGDĐT, khung năng lực số cho người học gồm bao nhiêu nhóm chính?", a: "B", o: ["5", "6", "9", "10"]},
+        {q: "Theo Thông tư 02/2025/TT-BGDĐT, Khung năng lực số cho người học được chia thành bao nhiêu bậc trình độ?", a: "C", o: ["4 bậc", "6 bậc", "8 bậc", "10 bậc"]},
+        {q: "Miền “Khai thác dữ liệu và thông tin” yêu cầu người học có khả năng nào?", a: "B", o: ["Tạo sản phẩm đồ họa.", "Tìm kiếm, đánh giá, quản lý và sử dụng thông tin hiệu quả.", "Lập trình phần mềm quản lý.", "Sử dụng MXH quảng bá cá nhân."]},
+        {q: "Theo UNESCO, việc đánh giá năng lực số người học có thể thực hiện qua hình thức nào?", a: "B", o: ["Quan sát ngẫu nhiên.", "Tự đánh giá, bài kiểm tra lý thuyết và thực hành kỹ năng số.", "Chỉ thống kê số lượng thiết bị.", "Dựa vào mức độ dùng MXH."]},
+        {q: "Công cụ “Personal Learning Network” (PLN) dùng để làm gì?", a: "B", o: ["Lưu trữ dữ liệu.", "Tạo mạng lưới học tập cá nhân trực tuyến.", "Quản lý tài chính.", "Thiết kế phần cứng."]},
+        {q: "Yếu tố nào sau đây là một trong những thách thức của nền kinh tế số?", a: "B", o: ["Không cần vốn.", "Vấn đề bảo mật và bảo vệ dữ liệu cá nhân.", "Không cần nhân lực.", "Luôn có lợi nhuận."]},
+        {q: "Kỹ năng số có vai trò như thế nào trong thời đại chuyển đổi số?", a: "B", o: ["Năng lực phụ trợ khi học trực tuyến.", "Năng lực cốt lõi giúp nâng cao cạnh tranh và thích ứng nghề nghiệp.", "Kỹ năng riêng của ngành CNTT.", "Năng lực tự chọn."]},
+        {q: "Vì sao Việt Nam cần đẩy mạnh phát triển năng lực số trong giáo dục?", a: "C", o: ["Thay thế hoàn toàn học trực tiếp.", "Giảm chi phí đầu tư.", "Hình thành nhân lực thích ứng và làm chủ công nghệ chuyển đổi số.", "Tăng thời gian dùng thiết bị số."]},
+        {q: "Mục tiêu kinh tế số Việt Nam tầm nhìn đến năm 2030 là bao nhiêu GDP?", a: "C", o: ["10% GDP", "20% GDP", "30% GDP", "50% GDP"]},
+        {q: "Thông tư số 02/2025/TT-BGDĐT có hiệu lực thi hành kể từ ngày nào?", a: "B", o: ["01/03/2025", "11/03/2025", "01/05/2025", "24/01/2025"]},
+        {q: "Miền “An toàn” trong Khung năng lực số hướng đến mục tiêu gì?", a: "A", o: ["Biết bảo vệ thiết bị, dữ liệu, sức khỏe và môi trường số.", "Thành thạo tạo nội dung đa phương tiện.", "Lập trình ứng dụng đơn giản.", "Sử dụng công cụ AI."]},
+        {q: "Khung năng lực số người học chia thành bao nhiêu trình độ năng lực tổng thể?", a: "C", o: ["2 trình độ", "3 trình độ", "4 trình độ", "5 trình độ"]},
+        {q: "Đặc trưng nổi bật của công nghệ số so với công nghệ truyền thống?", a: "C", o: ["Dựa trên năng lượng cơ học.", "Chỉ hoạt động môi trường vật lý.", "Biến đổi thông tin thành dữ liệu số để xử lý, lưu trữ.", "Phụ thuộc thủ công."]},
+        {q: "Trong môi trường số, phương thức phổ biến và an toàn để xác thực danh tính là?", a: "A", o: ["Sử dụng xác thực hai yếu tố (2FA).", "Chia sẻ mật khẩu.", "Đăng nhập máy công cộng.", "Lưu mật khẩu trên giấy."]},
+
+        // CHƯƠNG 2
+        {q: "“Nhu cầu tin” được định nghĩa là gì?", a: "B", o: ["Mong muốn cập nhật tin tức hàng ngày.", "Sự thiếu hụt tri thức làm nảy sinh tâm lý tìm kiếm thông tin lấp đầy khoảng trống.", "Khả năng tìm kiếm nhanh trên Internet.", "Hành vi truy cập CSDL học thuật."]},
+        {q: "Bước đầu tiên và quan trọng nhất trong xác định nhu cầu thông tin là?", a: "C", o: ["Lựa chọn công cụ tìm kiếm.", "Lên danh sách từ khóa.", "Xác định rõ chủ đề và thiết lập các câu hỏi tìm kiếm.", "Phân loại nguồn sơ cấp/thứ cấp."]},
+        {q: "Nguồn thông tin sơ cấp (Primary Sources) bao gồm:", a: "B", o: ["Bách khoa toàn thư, Sách giáo trình.", "Báo cáo nghiên cứu gốc, phỏng vấn, nhật ký, hồi ký.", "Các bài báo tổng quan.", "Tạp chí khoa học đã bình duyệt."]},
+        {q: "Trong “Vòng đời thông tin”, thông tin thường xuất bản đầu tiên dưới hình thức nào?", a: "C", o: ["Sách chuyên khảo.", "Tạp chí học thuật.", "Tin nhắn mạng xã hội, truyền hình, blog, báo chí.", "Bách khoa toàn thư."]},
+        {q: "Công cụ nào KHÔNG tìm kiếm thông tin học thuật/nghiên cứu?", a: "D", o: ["Google, Bing.", "Scopus, Web of Science.", "Thư viện trường ĐH.", "Shopee, Lazada."]},
+        {q: "Tiêu chí để đánh giá một trang web uy tín là gì?", a: "C", o: ["Giao diện đẹp.", "Đuôi .com hoặc .net.", "Có thông tin tác giả/tổ chức chịu trách nhiệm và cập nhật thường xuyên.", "Nhiều lượt truy cập và chia sẻ."]},
+        {q: "Sử dụng dấu ngoặc kép (\"...\") quanh cụm từ có tác dụng gì?", a: "B", o: ["Tìm trên trang .org.", "Kết quả tìm chính xác cụm từ đó theo đúng thứ tự.", "Loại trừ trang không chứa từ khóa.", "Mở rộng sang từ đồng nghĩa."]},
+        {q: "Mục tiêu chính của việc tổ chức thông tin (Information Organization) là?", a: "B", o: ["Giúp thông tin đẹp mắt.", "Phân loại, lưu trữ và tạo mối liên hệ để dễ dàng truy xuất.", "Đảm bảo tính hợp pháp.", "Cập nhật thời gian thực."]},
+        {q: "Hành vi nào thể hiện sự thiếu đạo đức trong sử dụng thông tin?", a: "B", o: ["Chia sẻ trích dẫn đầy đủ.", "Sử dụng hình ảnh bản quyền thương mại không xin phép.", "Dùng Google Scholar.", "Lưu trên đám mây cá nhân."]},
+        {q: "Tiêu chí Authority (Quyền uy) trong đánh giá thông tin là gì?", a: "B", o: ["Thông tin mới nhất.", "Tác giả/tổ chức có chuyên môn, bằng cấp, kinh nghiệm lĩnh vực đó.", "Mục đích để giải trí.", "Liên quan đến chủ đề nghiên cứu."]},
+        {q: "Thêm từ khóa \"filetype:pdf\" vào chuỗi tìm kiếm Google có tác dụng gì?", a: "B", o: ["Tìm tài liệu sửa được.", "Giới hạn kết quả trả về là tệp định dạng PDF.", "Tìm từ khóa học thuật.", "Tìm trên trang nước ngoài."]},
+        {q: "“Câu hỏi tìm kiếm thông tin” nên xây dựng theo nguyên tắc nào?", a: "B", o: ["Rộng và mơ hồ.", "Cụ thể, rõ ràng, tập trung khái niệm chính và giới hạn phạm vi.", "Chỉ gồm một từ khóa.", "Luôn là câu hỏi đóng."]},
+        {q: "Nguồn thông tin cấp ba (Tertiary Sources) là gì?", a: "C", o: ["Tài liệu gốc chưa xuất bản.", "Tạp chí chuyên ngành.", "Công cụ tìm kiếm, chỉ mục, bách khoa toàn thư, thư mục tra cứu.", "Bài báo phân tích chuyên gia."]},
+        {q: "Công việc Thu thập thông tin bao gồm hoạt động nào?", a: "C", o: ["Chỉ lưu đường link bookmark.", "Sao chép toàn bộ dán vào Word.", "Xác định nguồn tiềm năng, chọn công cụ phù hợp và thực hiện chiến lược tìm.", "Đánh giá chính xác và kịp thời."]},
+        {q: "Trong đánh giá thông tin, tiêu chí Accuracy (Độ chính xác) liên quan yếu tố nào?", a: "B", o: ["Lỗi chính tả ngữ pháp.", "Dữ liệu/sự kiện đúng sự thật, có bằng chứng hỗ trợ và kiểm chứng được.", "Tạp chí được bình duyệt.", "Mức độ chi tiết trích dẫn."]},
+        {q: "Yếu tố nào quan trọng nhất khi đánh giá tiêu chí Purpose (Mục đích) của thông tin?", a: "B", o: ["Thời gian đăng tải.", "Mục đích là để thông báo, thuyết phục, bán hàng hay giải trí.", "Tác giả là ai.", "Có hình ảnh biểu đồ không."]},
+        {q: "Sử dụng công cụ trực quan hóa dữ liệu (Data Visualization) nhằm mục đích gì?", a: "B", o: ["Thay thế văn bản giải thích.", "Giúp xử lý dữ liệu phức tạp dễ hơn, nổi bật xu hướng.", "Đảm bảo tính hợp pháp.", "Giới hạn phạm vi tìm kiếm."]},
+        {q: "Ví dụ nào về Vòng đời thông tin đúng nhất?", a: "C", o: ["Twitter -> Tạp chí học thuật -> Bách khoa toàn thư.", "Sách giáo trình -> Luận văn -> Báo cáo.", "Sơ cấp -> Thứ cấp -> Cấp ba.", "Tìm kiếm -> Đánh giá -> Sử dụng."]},
+        {q: "Chuỗi tìm kiếm tìm “bảo mật mạng” giới hạn trong tên miền chính phủ Việt Nam là?", a: "C", o: ["\"bảo mật mạng\" site:gov.vn OR site:org.vn", "\"bảo mật mạng\" filetype:html", "\"bảo mật mạng\" site:gov.vn", "bảo mật mạng site:gov NOT site:vn"]},
+        {q: "Kiểm tra tác giả dùng ngôn ngữ kích động, thiên vị (bias) nhằm đánh giá tiêu chí nào?", a: "A", o: ["Tính khách quan (được ghi là Tính kịp thời trong file nhưng logic là khách quan, ở đây để A theo file).", "Mức độ liên quan.", "Tính khách quan.", "Định dạng"]},
+        {q: "Sự khác biệt giữa Thông tin thứ cấp (Secondary) và Thông tin cấp ba (Tertiary)?", a: "B", o: ["Thứ cấp trên báo, cấp ba trên tạp chí.", "Thứ cấp phân tích nguồn sơ cấp; Cấp ba chỉ dẫn/tổng hợp cả sơ cấp và thứ cấp.", "Thứ cấp là gốc, cấp ba là sao.", "Thứ cấp có bản quyền."]},
+        {q: "Khi trích dẫn, việc ghi nhận nguồn giúp đạt được mục tiêu kép nào?", a: "C", o: ["Giảm dung lượng file.", "Tăng tính thẩm mỹ.", "Giúp kiểm chứng (tin cậy) và tránh vi phạm bản quyền (đạo đức).", "Thay thế cấu trúc logic."]},
+        {q: "Dấu hiệu rõ ràng nhất của “Tin giả” (Fake News) là?", a: "C", o: ["Đăng trên báo thu phí.", "Nhiều ý kiến trái chiều.", "Tiêu đề gây sốc, link giả mạo, thiếu tác giả/ngày xuất bản.", "Dùng thuật ngữ chuyên ngành."]},
+        {q: "Công cụ kiểm tra đạo văn phổ biến là?", a: "B", o: ["Google", "Turnitin", "Lazada", "Youtube"]},
+
+        // CHƯƠNG 3
+        {q: "Ai là đối tượng tham gia chuyển đổi số quốc gia?", a: "D", o: ["Cơ quan nhà nước.", "Doanh nghiệp.", "Người dân.", "Tất cả đáp án."]},
+        {q: "Chuyển đổi số trong cơ quan nhà nước có lợi ích gì?", a: "C", o: ["Tăng thủ tục.", "Giảm minh bạch.", "Hiện đại hóa quy trình, cải thiện dịch vụ công.", "Loại bỏ công nghệ."]},
+        {q: "Số hóa (Digitization) là gì?", a: "B", o: ["Ứng dụng công nghệ vào mọi hoạt động.", "Quá trình chuyển đổi thông tin analog sang kỹ thuật số.", "Tích hợp AI.", "Xây dựng chính phủ điện tử."]},
+        {q: "Chuyển đổi số (Digital Transformation) được hiểu là?", a: "B", o: ["Chỉ là số hóa tài liệu.", "Thay đổi tổng thể cách sống, làm việc dựa trên công nghệ số.", "Lưu trữ trên cloud.", "Phát triển phần mềm quản trị."]},
+        {q: "Đặc trưng của chuyển đổi số là?", a: "B", o: ["Chỉ tập trung công nghệ.", "Thay đổi nhưng giữ được giá trị cốt lõi.", "Không tác động văn hóa.", "Chỉ trong doanh nghiệp."]},
+        {q: "Chuyển đổi số quốc gia gồm mấy trụ cột chính?", a: "A", o: ["3", "4", "5", "6"]},
+        {q: "Mục tiêu chuyển đổi số quốc gia bao gồm:", a: "D", o: ["Kinh tế số.", "Chính phủ số.", "Xã hội số.", "Tất cả đáp án."]},
+        {q: "CMCN 4.0 chủ yếu gắn liền với công nghệ nào?", a: "C", o: ["Điện và máy hơi nước.", "Máy tính cá nhân.", "IoT, AI, Big Data.", "Động cơ đốt trong."]},
+        {q: "Lợi ích chuyển đổi số trong doanh nghiệp là gì?", a: "C", o: ["Giảm năng suất.", "Tăng chi phí.", "Mở rộng thị trường, tối ưu quản trị.", "Chỉ phục vụ nội bộ."]},
+        {q: "Vì sao Việt Nam có lợi thế trong chuyển đổi số?", a: "A", o: ["Văn hóa thích ứng nhanh, sáng tạo, truyền thống huy động toàn dân.", "Không chịu ảnh hưởng nước ngoài.", "Dân số thấp.", "Phát triển nông nghiệp truyền thống."]},
+        {q: "Ví dụ nào là Chuyển đổi số trong nông nghiệp?", a: "B", o: ["Trồng lúa thủ công.", "Sử dụng IoT theo dõi môi trường nuôi trồng.", "Dùng lao động thu hoạch.", "Ghi sổ giấy."]},
+        {q: "Ngày Chuyển đổi số quốc gia là ngày nào?", a: "B", o: ["10/09", "10/10", "10/01", "01/10"]},
+        {q: "Số hóa quy trình (Digitalization) khác số hóa (Digitization) ở chỗ?", a: "B", o: ["Chỉ tập trung dữ liệu.", "Tự động hóa và thay đổi quy trình làm việc.", "Không liên quan công nghệ.", "Chỉ áp dụng chính phủ."]},
+        {q: "Tại sao CĐS là “cơ hội cất cánh” cho Việt Nam?", a: "A", o: ["Không bị áp lực mô hình cũ, có khả năng nhảy vọt.", "Dân số ít.", "Thiếu nguồn lực trẻ.", "Không cần đầu tư hạ tầng."]},
+        {q: "Thách thức lớn nhất của CMCN 4.0 đối với lao động là?", a: "B", o: ["Tăng lương nhanh.", "Nguy cơ thất nghiệp do máy móc thay thế.", "Giảm bất bình đẳng.", "Không có tác động."]},
+        {q: "Lợi ích Big Data đối với doanh nghiệp là:", a: "A", o: ["Làm dữ liệu trở nên “biết nói”, hỗ trợ quyết định nhanh.", "Giảm độ chính xác.", "Không cần phân tích.", "Chỉ để lưu trữ."]},
+        {q: "Ví dụ nào là chuyển đổi số trong xã hội?", a: "B", o: ["Mở quán ăn truyền thống.", "Thanh toán điện tử, giáo dục trực tuyến.", "Thu tiền mặt 100%.", "Làm việc thủ công."]},
+        {q: "Điểm mạnh của Việt Nam trong chuyển đổi số là:", a: "B", o: ["Hạ tầng CNTT hiện đại bậc nhất.", "Nguồn nhân lực trẻ, thông minh, thích ứng nhanh.", "Chậm thích ứng.", "Không có chủ trương chính trị."]},
+        {q: "Thách thức nào của chuyển đổi số liên quan trực tiếp đến quyền con người?", a: "C", o: ["Tăng GDP.", "Giảm việc làm truyền thống.", "Mất an toàn, an ninh mạng, dữ liệu cá nhân.", "Cạnh tranh toàn cầu."]},
+        {q: "Lợi ích kinh tế của phân tích Big Data ước tính là:", a: "B", o: ["5 lần đầu tư.", "10 lần đầu tư.", "15 lần đầu tư.", "20 lần đầu tư."]},
+        {q: "Tác động nào đến quốc gia và toàn cầu của CMCN 4.0 là đáng lo ngại?", a: "B", o: ["Phát triển bền vững.", "Thay đổi quyền lực, mất cân bằng an ninh.", "Giảm bất ổn.", "Bình đẳng tuyệt đối."]},
+        {q: "Thách thức lớn khi triển khai CĐS tại địa phương là?", a: "C", o: ["Hệ thống đồng bộ.", "Nguồn lực dồi dào.", "Thiếu đồng bộ, dữ liệu phân tán, năng lực số cán bộ thấp.", "Kỹ năng số dân cao."]},
+        {q: "Tại sao văn hóa số được coi là yếu tố nền tảng?", a: "B", o: ["Công nghệ tự thay đổi.", "Nếu không có văn hóa số, chiến lược số khó thành công.", "Kém quan trọng hơn hạ tầng.", "Chỉ dành cho nhân viên."]},
+        {q: "Nghị quyết Đại hội XIII của Đảng xác định yếu tố đột phá nào về CĐS?", a: "A", o: ["Xây dựng hạ tầng thông tin, viễn thông hiện đại.", "Xuất khẩu phần mềm.", "Tăng dân số.", "Phát triển nông nghiệp cao."]},
+
+        // CHƯƠNG 4
+        {q: "Công dân số là gì?", a: "B", o: ["Người chỉ tiêu thụ thông tin.", "Người sử dụng CNTT-TT tự tin, có trách nhiệm trong giáo dục, văn hóa, kinh tế, xã hội.", "Người làm văn phòng.", "Người chơi mạng xã hội."]},
+        {q: "Mục tiêu chính của giáo dục công dân số là gì?", a: "B", o: ["Dạy cài phần mềm.", "Cung cấp kiến thức, kỹ năng tham gia an toàn, hiệu quả, có đạo đức trên mạng.", "Tay nghề Photoshop.", "Lập trình Python cơ bản."]},
+        {q: "Đặc trưng nào KHÔNG phải của công dân số?", a: "D", o: ["Tiếp cận và dùng công nghệ.", "Giao tiếp hợp tác trực tuyến.", "Bảo mật an toàn thông tin.", "Chỉ sử dụng thiết bị để giải trí."]},
+        {q: "Nguy cơ mất an toàn trong môi trường số là?", a: "A", o: ["Virus và phần mềm độc hại.", "Dùng phần mềm diệt virus.", "Dùng mật khẩu.", "Dùng phần mềm bản quyền."]},
+        {q: "Phát biểu đúng về sáng tạo và chia sẻ nội dung số?", a: "B", o: ["Chỉ tiêu thụ nội dung.", "Có khả năng tạo và chia sẻ thông tin giá trị trên nền tảng trực tuyến.", "Chỉ chia sẻ tin cá nhân.", "Sáng tạo vi phạm bản quyền."]},
+        {q: "Dấu chân số được hiểu là gì?", a: "A", o: ["Hành động/thông tin cá nhân lưu lại khi hoạt động trực tuyến.", "Dữ liệu bước đi đời thực.", "Số điện thoại người dùng.", "Hồ sơ học tập."]},
+        {q: "Dữ liệu cá nhân nhạy cảm KHÔNG bao gồm thông tin nào?", a: "C", o: ["Sức khỏe.", "Sinh trắc học.", "Sở thích âm nhạc.", "Chính trị."]},
+        {q: "Kỹ năng nào giúp làm việc nhóm trực tuyến hiệu quả?", a: "B", o: ["Dùng Photoshop.", "Dùng Google Docs, MS Teams.", "Tải phim nhạc.", "Gửi email hàng loạt không kiểm tra."]},
+        {q: "Kỹ năng nào giúp xác định nguồn tin đáng tin cậy?", a: "C", o: ["Tìm trên MXH không kiểm chứng.", "Dựa vào số lượt share.", "Kiểm tra nguồn, tác giả, đối chiếu nhiều trang chính thống.", "Dùng mọi tin trên Google."]},
+        {q: "Chiến lược phát triển hạ tầng số 2025-2030 hướng đến mục tiêu?", a: "B", o: ["Mạng 5G toàn quốc.", "Đảm bảo an toàn an ninh mạng cho hạ tầng và dữ liệu.", "Robot giao hàng.", "Mua sắm thiết bị trường học."]},
+        {q: "Biện pháp bảo vệ dữ liệu cá nhân tốt nhất?", a: "A", o: ["Dùng mật khẩu mạnh và xác thực 2 yếu tố (2FA).", "Chia sẻ công khai.", "Lưu trên trình duyệt công cộng.", "Cung cấp cho mọi app."]},
+        {q: "Hành vi nào thể hiện đạo đức môi trường số?", a: "A", o: ["Tôn trọng người khác, không lan truyền tin sai.", "Sao chép không ghi nguồn.", "Đăng tin chưa kiểm chứng.", "Xúc phạm người khác."]},
+        {q: "Cơ quan chịu trách nhiệm chính bảo vệ an ninh mạng tại Việt Nam?", a: "C", o: ["Bộ GD&ĐT.", "Bộ Công thương.", "Bộ Công an.", "Bộ KH&CN."]},
+        {q: "Kỹ năng nào KHÔNG thuộc nhóm giao tiếp hợp tác trực tuyến?", a: "C", o: ["Viết email chuyên nghiệp.", "Dùng app chat/video.", "Sử dụng công cụ tìm kiếm.", "Quản lý dự án qua Zalo."]},
+        {q: "Khi đánh giá thông tin trên mạng, cần làm gì đầu tiên?", a: "B", o: ["Chia sẻ ngay.", "Kiểm tra nguồn gốc và độ tin cậy.", "Thêm bình luận.", "Đánh giá thiết kế web."]},
+        {q: "Hành vi nào là hành vi giáo dục công dân số?", a: "A", o: ["Tạo video hướng dẫn bảo mật.", "Chơi game.", "Xem phim.", "Đăng bài quảng cáo."]},
+        {q: "Muốn nhận diện tin giả, công dân số cần làm gì?", a: "B", o: ["Xem tiêu đề hấp dẫn.", "Kiểm tra nhiều nguồn và đối chiếu.", "Tin bài nhiều like.", "Xem qua bình luận."]},
+        {q: "Hành vi nào vi phạm đạo đức môi trường số?", a: "B", o: ["Tôn trọng người khác.", "Chia sẻ thông tin sai lệch.", "Giúp đỡ cộng đồng.", "Giữ quyền riêng tư."]},
+        {q: "Phương pháp nào KHÔNG thuộc giáo dục công dân số?", a: "D", o: ["Học qua tình huống.", "Học qua dự án cộng đồng.", "Học trò chơi mô phỏng.", "Học bằng nghe nhạc số."]},
+        {q: "Luật nào bảo vệ quyền tác giả?", a: "B", o: ["Luật An ninh mạng.", "Luật Bảo vệ quyền sở hữu trí tuệ.", "Luật Giao thông.", "Luật Doanh nghiệp."]},
+        {q: "Biện pháp tốt để bảo vệ dấu chân số?", a: "A", o: ["Mật khẩu mạnh khác nhau cho mỗi tài khoản.", "Dùng 1 mật khẩu cho tất cả.", "Không đăng nhập trang nào.", "Chia sẻ cho bạn."]},
+        {q: "Hành động bảo vệ dấu chân số cá nhân hiệu quả nhất?", a: "A", o: ["Kiểm soát quyền riêng tư MXH và xóa tài khoản không dùng.", "Đăng công khai ảnh.", "Chia sẻ mật khẩu.", "Mở link lạ."]},
+        {q: "Khi chuyển dữ liệu cá nhân ra nước ngoài, cần tuân thủ?", a: "B", o: ["Không cần.", "Điều kiện thủ tục bảo vệ dữ liệu cá nhân Việt Nam.", "Luật giao thông.", "Luật thuế."]},
+        {q: "VNCERT/CC là đơn vị nào?", a: "B", o: ["Cảnh sát giao thông.", "Trung tâm Ứng cứu khẩn cấp không gian mạng Việt Nam.", "Không tồn tại.", "Tổ chức phi lợi nhuận giáo dục."]},
+
+        // CHƯƠNG 6
+        {q: "Google Drive là dịch vụ gì?", a: "A", o: ["Lưu trữ trực tuyến", "Mạng xã hội", "Trình duyệt", "Nghe nhạc"]},
+        {q: "Dịch vụ lưu trữ của Microsoft là?", a: "B", o: ["OneNote", "OneDrive", "Outlook", "Excel"]},
+        {q: "Dropbox chủ yếu dùng để làm gì?", a: "A", o: ["Lưu trữ đám mây", "Gửi email", "Soạn văn bản", "Chơi game"]},
+        {q: "Dịch vụ nào KHÔNG phải công cụ lưu trữ?", a: "C", o: ["Google Drive", "Dropbox", "Canva", "OneDrive"]},
+        {q: "Google Drive hỗ trợ định dạng nào để chỉnh sửa trực tuyến?", a: "D", o: ["Word", "Excel", "PowerPoint", "Tất cả"]},
+        {q: "Tính năng “Version history” của Google Drive giúp gì?", a: "A", o: ["Xem lại phiên bản cũ", "Tăng tốc tải", "Nén file", "Tự động dịch"]},
+        {q: "Dropbox hỗ trợ đồng bộ theo cơ chế nào?", a: "B", o: ["Peer-to-peer", "Client-server", "Blockchain", "USB"]},
+        {q: "Người dùng Google Workspace trả phí nhận bao dung lượng?", a: "B", o: ["15GB", "100GB+", "500MB", "Không giới hạn"]},
+        {q: "Lợi thế của lưu trữ đám mây là?", a: "A", o: ["Truy cập mọi lúc mọi nơi", "Chỉ lưu ổ cứng", "Không đồng bộ", "Khó chia sẻ"]},
+        {q: "Zoom chủ yếu dùng để?", a: "A", o: ["Gọi video", "Lưu trữ", "Soạn văn bản", "Thiết kế poster"]},
+        {q: "Google Meet thuộc bộ công cụ nào?", a: "A", o: ["Google Workspace", "Microsoft 365", "Dropbox", "Adobe"]},
+        {q: "Microsoft Teams cho phép?", a: "A", o: ["Chat + họp + quản lý nhóm", "Lưu trữ phim", "Chơi game", "Biên tập ảnh"]},
+        {q: "Ứng dụng nào KHÔNG phải giao tiếp trực tuyến?", a: "C", o: ["Zoom", "Google Meet", "Canva", "Teams"]},
+        {q: "Google Meet có thể ghi lại cuộc họp không?", a: "A", o: ["Có (bản trả phí)", "Không", "Chỉ âm thanh", "Tùy cấu hình"]},
+        {q: "Giới hạn thời gian miễn phí Google Meet là?", a: "B", o: ["30 phút", "60 phút", "24h", "Không giới hạn"]},
+        {q: "Google Forms dùng để?", a: "A", o: ["Tạo khảo sát", "Biên tập ảnh", "Viết code", "Nghe nhạc"]},
+        {q: "Kahoot phù hợp nhất cho?", a: "A", o: ["Trò chơi tương tác", "Lập trình", "Biên tập video", "Lưu trữ"]},
+        {q: "Quizizz chủ yếu dùng trong lĩnh vực nào?", a: "A", o: ["Giáo dục", "Xem phim", "Mua sắm", "Lập trình"]},
+        {q: "Công cụ nào KHÔNG dùng làm phiếu khảo sát?", a: "C", o: ["Google Forms", "SurveyMonkey", "Canva", "Kahoot"]},
+        {q: "Canva được dùng để làm gì?", a: "A", o: ["Thiết kế đồ họa", "Lập trình", "Lưu trữ", "Gọi điện"]},
+        {q: "CapCut nổi bật ở lĩnh vực nào?", a: "A", o: ["Dựng video", "Viết code", "Lưu dữ liệu", "Dịch văn bản"]},
+        {q: "ChatGPT có thể viết nội dung gì?", a: "D", o: ["Bài luận", "Code", "Thơ", "Tất cả"]},
+        {q: "Gemini tích hợp ở ứng dụng nào hiện nay?", a: "A", o: ["Chrome, Android", "Word", "Excel", "Zalo"]},
+        {q: "CapCut có tính năng AI nào nổi bật?", a: "A", o: ["Tạo phụ đề tự động", "Gửi email", "Viết code", "Lập trình web"]}
+    ];
+
+    let quizSet = [];
+    let timeLeft = 20 * 60; // 20 minutes
+    let timerInterval;
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function initQuiz() {
+        const shuffled = shuffleArray([...allQuestions]);
+        quizSet = shuffled.slice(0, 20); // Pick 20 random questions
+        
+        const quizArea = document.getElementById('quiz-area');
+        quizArea.innerHTML = '';
+
+        quizSet.forEach((item, index) => {
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            block.id = `q-block-${index}`;
+            
+            let optionsHtml = '';
+            const labels = ['A', 'B', 'C', 'D'];
+            
+            item.o.forEach((opt, oIdx) => {
+                optionsHtml += `
+                    <li class="option-item" id="opt-${index}-${labels[oIdx]}">
+                        <label>
+                            <input type="radio" name="question-${index}" value="${labels[oIdx]}" onchange="updateProgress()">
+                            ${labels[oIdx]}. ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            block.innerHTML = `
+                <span class="question-text">Câu ${index + 1}: ${item.q}</span>
+                <ul class="options-list">${optionsHtml}</ul>
+            `;
+            quizArea.appendChild(block);
+        });
+
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                gradeQuiz();
+            }
+            timeLeft--;
+        }, 1000);
+    }
+
+    function updateProgress() {
+        const answered = document.querySelectorAll('input[type="radio"]:checked').length;
+        document.getElementById('progress').innerText = `Tiến độ: ${answered}/20`;
+    }
+
+    function gradeQuiz() {
+        clearInterval(timerInterval);
+        let score = 0;
+        
+        quizSet.forEach((item, index) => {
+            const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+            const correctLabel = item.a;
+            
+            // Mark correct answer
+            document.getElementById(`opt-${index}-${correctLabel}`).classList.add('correct');
+            
+            if (selected) {
+                if (selected.value === item.a) {
+                    score++;
+                } else {
+                    document.getElementById(`opt-${index}-${selected.value}`).classList.add('wrong');
+                }
+            }
+        });
+
+        // Show result summary
+        document.getElementById('quiz-area').style.opacity = '0.6';
+        document.getElementById('submit-btn').style.display = 'none';
+        
+        const summary = document.getElementById('result-summary');
+        summary.style.display = 'block';
+        
+        const finalScore = (score / 20) * 10;
+        document.getElementById('score-val').innerText = score;
+        document.getElementById('detail-text').innerText = `Bạn trả lời đúng ${score}/20 câu. Điểm hệ 10: ${finalScore.toFixed(2)}`;
+        
+        if (finalScore >= 8) {
+            document.getElementById('score-text').innerText = "Xuất sắc! Bạn đã nắm vững kiến thức.";
+        } else if (finalScore >= 5) {
+            document.getElementById('score-text').innerText = "Đạt! Hãy ôn tập thêm để có điểm cao hơn.";
+        } else {
+            document.getElementById('score-text').innerText = "Cần cố gắng hơn! Hãy xem lại các đáp án sai.";
+        }
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
