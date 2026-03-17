@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện tập Cấu trúc dữ liệu & Giải thuật - Đại học Hải Phòng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1000;
+            border-bottom: 2px solid #db2777;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .question-block {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid #e1e4e8;
+            transition: all 0.2s;
+        }
+        .option-item label {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: 0.2s;
+        }
+        .option-item label:hover { background-color: #f1f3f5; }
+        .option-item input:checked + span { color: #db2777; font-weight: 600; }
+        .correct { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724; }
+        .wrong { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
+        .timer-box {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #dc3545;
+            padding: 8px 16px;
+            background: #fff5f5;
+            border: 1px solid #dc3545;
+            border-radius: 50px;
+        }
+        pre { background: #f1f5f9; padding: 10px; border-radius: 6px; font-size: 0.9em; margin: 10px 0; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+
+<div class="sticky-header py-4 px-6">
+    <div class="max-w-4xl mx-auto flex justify-between items-center">
+        <div>
+            <a href="index.html" class="inline-flex items-center text-pink-600 hover:text-pink-800 font-bold mb-2 transition-colors text-sm">
+                <i class="fas fa-chevron-left mr-2"></i> Quay lại trang chủ
+            </a>
+            <h1 class="text-lg md:text-xl font-bold text-gray-800 uppercase">Luyện tập: CTDL & Giải thuật</h1>
+        </div>
+        <div class="timer-box" id="timer">60:00</div>
+    </div>
+</div>
+
+<main class="max-w-4xl mx-auto p-4 md:p-6 text-gray-800">
+    <div class="mb-4 text-sm text-gray-500 italic">Hệ thống đã bốc ngẫu nhiên 50 câu hỏi từ ngân hàng 100 câu.</div>
+    
+    <div id="quiz-container">
+        <!-- Questions will load here -->
+    </div>
+
+    <button id="submit-btn" onclick="submitQuiz()" class="w-full bg-pink-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-pink-700 transition shadow-lg mt-8 text-center">
+        NỘP BÀI VÀ XEM ĐIỂM
+    </button>
+
+    <div id="result-summary" class="hidden mt-10 p-8 bg-pink-50 rounded-2xl text-center border-2 border-pink-200">
+        <h2 class="text-3xl font-bold text-pink-900 mb-2">KẾT QUẢ CỦA BẠN</h2>
+        <div class="text-5xl font-black text-pink-700 my-4" id="final-score">0/50</div>
+        <p class="text-gray-600 mb-6" id="score-comment"></p>
+        <button onclick="location.reload()" class="bg-orange-500 text-white px-8 py-3 rounded-lg font-bold hover:bg-orange-600 transition">
+            Làm đề khác
+        </button>
+    </div>
+</main>
+
+<script>
+    const bank = [
+        {q: "Mối quan hệ giữa cấu trúc dữ liệu và giải thuật có thể minh họa bằng đẳng thức:", a: "A", o: ["Cấu trúc dữ liệu + Giải thuật = Chương trình", "Cấu trúc dữ liệu + Chương trình = Giải thuật", "Chương trình + Giải thuật = Cấu trúc dữ liệu", "Cấu trúc dữ liệu = Chương trình"]},
+        {q: "Để đánh giá cấu trúc dữ liệu chúng ta dựa vào tiêu chí:", a: "D", o: ["Tiết kiệm bộ nhớ trong", "Phản ánh thực tế của bài toán", "Giúp dễ dàng trong thao tác dữ liệu", "Các phương án đều đúng"]},
+        {q: "Tiêu chuẩn để đánh giá giải thuật tốt là:", a: "D", o: ["Giải thuật đúng đắn", "Giải thuật đơn giản", "Giải thuật thực hiện nhanh", "Tất cả các phương án đều đúng"]},
+        {q: "Thời gian thực hiện chương trình T(n) là:", a: "A", o: ["Một hàm của kích thước dữ liệu đầu vào n", "Một hàm của độ dài dữ liệu đầu vào", "Thời gian ngắn nhất để thực hiện", "Thời gian thực hiện chương trình nhanh nhất"]},
+        {q: "Thường ta coi T(n) là thời gian thực hiện chương trình trong trường hợp xấu nhất, tức là:", a: "C", o: ["Thời gian nhỏ nhất với kích thước T", "Thời gian nhỏ nhất với kích thước n", "Thời gian lớn nhất với kích thước n", "Thời gian lớn nhất với kích thước T"]},
+        {q: "Phương pháp xác định hiệu quả thời gian của giải thuật là:", a: "D", o: ["Lập trình hoạt động trên máy xác định", "Đo lường thời gian thực hiện trên máy xác định", "Cả hai sai", "Cả hai đúng"]},
+        {q: "Khi nói T(n) = Cn thì chương trình đó:", a: "D", o: ["Cần C chỉ thị", "Cần T(n) chỉ thị", "Cần n chỉ thị", "Cần Cn chỉ thị"]},
+        {q: "Đơn vị đo thời gian thực hiện chương trình là:", a: "C", o: ["Giờ, phút, giây", "Đơn vị đo độ dài", "Thời gian thực hiện trong máy tính lý tưởng", "Tất cả sai"]},
+        {q: "Tìm mệnh đề SAI: Cấu trúc dữ liệu bao gồm:", a: "B", o: ["Một tập hợp dữ liệu thành phần", "Các dữ liệu thành phần đặt sát nhau trong bộ nhớ", "Kiểu dữ liệu chung thuộc tính", "Tất cả sai"]},
+        {q: "Trong giải thuật, bài toán liệt kê là:", a: "A", o: ["Yêu cầu đưa ra danh sách các cấu hình", "Phân tích đối tượng thành nhiều thành phần", "Tính tổ hợp chập k của n", "Tất cả đúng"]},
+        {q: "Thuật toán đệ quy là:", a: "D", o: ["Lời gọi đến thuật toán khác", "Lời gọi chính nó với kích thước lớn hơn", "Lời gọi trực tiếp chính nó với kích thước nhỏ hơn", "Lời gọi trực tiếp hoặc gián tiếp chính nó với kích thước nhỏ hơn"]},
+        {q: "Cơ chế thực hiện giải thuật đệ quy bao gồm:", a: "C", o: ["Đi từ trên xuống", "Đi từ dưới lên", "Hai giai đoạn: từ trên xuống và từ dưới lên", "Tất cả sai"]},
+        {q: "Trong hàm đệ quy tính n!, sau mỗi lần gọi thì n:", a: "B", o: ["Tăng 1", "Giảm 1", "Bằng 0", "Bằng 1"]},
+        {q: "Một hàm đệ quy được định nghĩa bởi:", a: "A", o: ["2 phần (Phần neo và Phần đệ quy)", "3 phần", "1 phần", "Không chia phần"]},
+        {q: "Số bước thực hiện Tháp Hà Nội với 3 đĩa là:", a: "C", o: ["5", "6", "7", "8"]},
+        {q: "Nhược điểm của thuật toán đệ quy là:", a: "D", o: ["Tốn bộ nhớ", "Tốn thời gian", "Dễ gây tràn bộ nhớ", "Tất cả các phương án đều đúng"]},
+        {q: "Hàm sum(n) { if(n!=0) return n + sum(n-1); else return n; } với n=4 trả về:", a: "B", o: ["9", "10", "11", "8"]},
+        {q: "Fibonacci(5) trả về (với F(0)=0, F(1)=1):", a: "A", o: ["5", "8", "6", "9"]},
+        {q: "Power(3, 4) trả về:", a: "B", o: ["82", "81", "69", "98"]},
+        {q: "Số lần gọi đệ quy trong display(n) với n=9 là:", a: "C", o: ["8", "7", "9", "10"]},
+        {q: "Danh sách là gì trong lập trình?", a: "B", o: ["Dãy số nguyên", "Cấu trúc dữ liệu lưu trữ phần tử liên tiếp", "Phương thức sắp xếp", "Biến đặc biệt"]},
+        {q: "Trong danh sách mảng, cách truy cập phần tử có chỉ số là:", a: "A", o: ["Dấu ngoặc vuông ([])", "Dấu ngoặc tròn", "Dấu ngoặc nhọn", "Dấu ngoặc kép"]},
+        {q: "Đặc điểm quan trọng của danh sách là:", a: "A", o: ["Các phần tử có thể thay đổi", "Các phần tử không thể thay đổi", "Chỉ chứa số nguyên", "Chỉ chứa chuỗi"]},
+        {q: "Stack là cấu trúc dữ liệu theo nguyên tắc:", a: "B", o: ["FIFO", "LIFO", "LILO", "FILO"]},
+        {q: "Phép toán chính trên Stack là:", a: "A", o: ["Push và Pop", "Add và Remove", "Enqueue và Dequeue", "Insert và Delete"]},
+        {q: "Phần tử mới thêm vào Stack nằm ở:", a: "D", o: ["Đầu", "Cuối", "Giữa", "Đỉnh"]},
+        {q: "Queue hoạt động theo nguyên tắc:", a: "B", o: ["LIFO", "FIFO", "LILO", "FILO"]},
+        {q: "Phép toán chính trên Queue là:", a: "B", o: ["Push và Pop", "Enqueue và Dequeue", "Add và Remove", "Insert và Delete"]},
+        {q: "Trong Queue, phần tử mới được thêm vào ở:", a: "B", o: ["Đầu", "Cuối", "Giữa", "Đỉnh"]},
+        {q: "Khi loại bỏ phần tử khỏi Stack gọi là:", a: "A", o: ["Pop", "Push", "Peek", "Empty"]},
+        {q: "Ngăn xếp có thể triển khai bằng:", a: "C", o: ["Mảng", "Danh sách liên kết", "Cả mảng và danh sách liên kết", "Cả mảng, DSLK và cây"]},
+        {q: "Khác biệt chính giữa DSLK đơn và đôi là:", a: "C", o: ["Số lượng phần tử", "Khả năng tìm kiếm", "Khả năng chèn và xóa (liên kết ngược)", "Không khác biệt"]},
+        {q: "Định nghĩa đúng nhất về Queue:", a: "D", o: ["Thêm một đầu, không xóa được", "Thêm và xóa ở Đỉnh", "Thêm và xóa ở vị trí bất kỳ", "Thêm ở lối sau (rear), xóa ở lối trước (front)"]},
+        {q: "Stack {12, 5, 20, 23, 72} (72 ở đỉnh). Để lấy phần tử thứ 4 (giá trị 5):", a: "A", o: ["POP(72), POP(23), POP(20), POP(5)", "POP(72), POP(23), PUSH(20), POP(5)", "POP(23)...", "Tất cả sai"]},
+        {q: "Ý tưởng của Selection Sort tăng dần:", a: "C", o: ["Trộn dãy con", "Chèn vị trí thích hợp", "Chọn phần tử bé nhất đổi chỗ vị trí thứ 1, lặp lại cho vị trí 2...", "So sánh cặp kế tiếp"]},
+        {q: "Quick sort còn gọi là phương pháp:", a: "D", o: ["Trộn", "Vun đống", "Chèn", "Phân đoạn"]},
+        {q: "Ý tưởng Quick sort là:", a: "C", o: ["Chọn bé nhất về đầu", "So sánh cặp kế tiếp đẩy lên đầu", "Chia dãy thành hai dựa vào phần tử khóa", "Trộn dãy con"]},
+        {q: "Ý tưởng Merge sort là:", a: "D", o: ["So sánh cặp kế tiếp", "Chia đôi dựa vào khóa", "Chọn bé nhất về đầu", "Chia thành dãy con rồi trộn lại"]},
+        {q: "Cơ chế Heap trong sắp xếp vun đống:", a: "D", o: ["Cây nhị phân đầy đủ", "Cha lớn hơn con trái nhỏ hơn con phải", "Cha nhỏ hơn con", "Cây nhị phân hoàn chỉnh cha lớn hơn hai con"]},
+        {q: "Thứ tự thủ tục Heap Sort:", a: "A", o: ["Insert – Upheap – Remove – Downheap", "Remove – Downheap – Insert – Upheap", "Insert – Upheap – Downheap – Remove", "Upheap – Downheap – Remove – Insert"]},
+        {q: "Tìm kiếm tuần tự (Sequential Search):", a: "C", o: ["Dựa vào cây BST", "Chia dãy dựa vào khóa", "So sánh lần lượt từ đầu đến khi thấy hoặc hết", "So sánh với phần tử giữa"]},
+        {q: "Giải thuật áp dụng 'Chia để trị':", a: "D", o: ["Quick sort, Heap sort", "Quick sort, Insert sort", "Quick sort, Bubble sort", "Quick sort, Merge sort"]},
+        {q: "Sắp xếp so sánh cặp liền kề và đổi chỗ:", a: "B", o: ["Quick sort", "Bubble sort", "Insertion sort", "Merge sort"]},
+        {q: "Quick sort trường hợp xấu nhất có độ phức tạp:", a: "D", o: ["O(1)", "O(n)", "O(logn)", "O(n^2)"]},
+        {q: "Chọn câu đúng nhất cho hàm Swap trong Bubble Sort:", a: "A", o: ["void Swap(int &X, int &Y)", "void Swap(float X, float Y)", "void Swap(int *X, int *Y)", "void Swap(int X, int Y)"]},
+        {q: "Selection Sort dãy 16 60 2 25 15 45 5 30 33 20. Cần bao nhiêu lần chọn?", a: "C", o: ["7", "8", "9", "10"]},
+        {q: "Trong cây nhị phân, nút trên cùng gọi là:", a: "A", o: ["Gốc", "Lá", "Cha", "Con"]},
+        {q: "Đặc điểm cây nhị phân hoàn chỉnh:", a: "A", o: ["Mỗi nút tối đa 2 con", "Có thể nhiều hơn 2 con", "Không con", "Hơn 2 con"]},
+        {q: "Duyệt Preorder:", a: "A", o: ["Cha -> Trái -> Phải", "Trái -> Cha -> Phải", "Phải -> Cha -> Trái", "Cha -> Phải -> Trái"]},
+        {q: "Trong BST, nút con phải so với cha:", a: "A", o: ["Lớn hơn", "Nhỏ hơn", "Bằng", "Không quy tắc"]},
+        {q: "Cây nhị phân cân bằng (AVL type):", a: "C", o: ["Mọi nút 2 con", "Độ cao tối thiểu", "Chênh lệch cao trái-phải <= 1", "Tỷ lệ lá tối ưu"]},
+        {q: "Trong BST, thao tác chèn thực hiện ở:", a: "D", o: ["Lá đầu tiên gặp", "Gốc", "Lá cuối", "Lá gần giá trị nhất"]},
+        {q: "BST duyệt Inorder cho kết quả:", a: "B", o: ["Giảm dần", "Tăng dần", "Ngẫu nhiên", "Không hiển thị"]},
+        {q: "BST xóa nút có 2 con, nút thay thế là:", a: "C", o: ["Chỉ con trái", "Chỉ con phải", "Nút lớn nhất bên trái hoặc bé nhất bên phải", "Xóa luôn 2 con"]},
+        {q: "Cây nhị phân đầy đủ (Full Binary Tree):", a: "A", o: ["Mọi nút có đúng 0 hoặc 2 con", "Giá trị tăng dần", "Lá ở mức cuối", "Giá trị giảm dần"]},
+        {q: "BST duyệt Inorder:", a: "A", o: ["Tăng dần", "Giảm dần", "Ngẫu nhiên", "Không xác định"]},
+        {q: "BST chèn giá trị mới:", a: "D", o: ["Lá cuối", "Gốc", "Lá đầu gặp", "Lá phù hợp"]},
+        {q: "BST xóa nút phức tạp nhất khi có:", a: "C", o: ["0 con", "1 con", "2 con", "3 con"]},
+        {q: "BST tìm kiếm trung bình mất bao lâu?", a: "B", o: ["O(1)", "O(log n)", "O(n)", "O(n^2)"]},
+        {q: "BST tìm giá trị không tồn tại trả về:", a: "B", o: ["Gần nhất", "Null", "0", "Lớn nhất"]},
+        {q: "Sắp xếp Inorder trên BST:", a: "D", o: ["Bubble sort", "Quicksort", "Mergesort", "Thao tác duyệt Inorder"]},
+        {q: "Đồ thị là:", a: "A", o: ["Tập hợp đỉnh và cạnh", "Phương trình", "Hình học", "Bảng số liệu"]},
+        {q: "Đồ thị vô hướng, mỗi cạnh nối:", a: "A", o: ["2 đỉnh", "3 đỉnh", "4 đỉnh", "5 đỉnh"]},
+        {q: "Đồ thị có hướng, đỉnh có bậc là:", a: "A", o: ["Số cạnh kết nối", "Độ dài", "Màu sắc", "Tên"]},
+        {q: "Chu trình là:", a: "C", o: ["Đỉnh không cạnh", "Tập không kết nối", "Đường đi đóng thành vòng", "Cùng màu sắc"]},
+        {q: "Đồ thị không chu trình gọi là:", a: "C", o: ["Đầy đủ", "Vô hướng", "Cây (nếu liên thông)", "Đồng dạng"]},
+        {q: "Đỉnh có bậc vào/ra trong đồ thị có hướng:", a: "C", o: ["Không liên quan", "Luôn bằng nhau", "Có thể bằng hoặc khác", "Không khái niệm"]},
+        {q: "Đồ thị đầy đủ (Complete Graph):", a: "B", o: ["Nhiều đỉnh nhất", "Mọi đỉnh kết nối với tất cả đỉnh khác", "Không chu trình", "Màu đẹp"]},
+        {q: "Đồ thị có trọng số:", a: "B", o: ["Đỉnh có trọng số", "Cạnh có trọng số", "Cả hai", "Không trọng số"]},
+        {q: "Đồ thị liên thông:", a: "A", o: ["Tất cả đỉnh đều kết nối", "Một số không kết nối", "Cạnh kết nối", "Không đỉnh nào kết nối"]},
+        {q: "Đồ thị cây (Tree):", a: "B", o: ["Nhiều nhánh", "Không chu trình và liên thông", "Nhiều chu trình", "Nhiều đỉnh"]},
+        {q: "DFS thăm theo thứ tự:", a: "C", o: ["Bậc tăng", "Bậc giảm", "Tìm thấy đầu tiên (sâu dần)", "Tìm cuối"]},
+        {q: "Hàm TinhTong số nguyên tố:", a: "C", o: ["Tổng N số nguyên đầu", "Tổng số nguyên tố < N", "Tổng N số nguyên tố đầu tiên", "Tổng số nguyên tố > N"]},
+        {q: "Mảng giả định X tìm tuyến tính:", a: "C", o: ["Tìm nhị phân", "Tìm nhỏ nhất", "Tìm tuyến tính X", "Tất cả sai"]},
+        {q: "Lựa chọn định nghĩa danh sách đúng nhất:", a: "D", o: ["Tập phần tử liên hệ nhau", "Số phần tử là chiều dài", "Dài 0 là rỗng", "Tất cả đều đúng"]},
+        {q: "Ưu điểm mảng:", a: "B", o: ["Dễ thêm bớt", "Truy xuất nhanh qua chỉ số", "Mật độ bộ nhớ tối ưu", "Tất cả đúng"]},
+        {q: "DSLK đôi (Doubly Linked List):", a: "C", o: ["2 liên kết 1 phần tử", "1 liên kết 2 phần tử", "2 liên kết tới trước và sau", "2 liên kết tới đầu và cuối"]},
+        {q: "Binary Search không đệ quy tốt nhất (trúng Mid):", a: "A", o: ["Gmin=3, Smin=2", "Gmin=2, Smin=3", "Gmin=2, Smin=2", "Gmin=0, Smin=2"]},
+        {q: "Biểu thức cây: (x) -> (2), (+) -> (4), (+) -> (5), (3)", a: "A", o: ["(2 * (4 + (5 + 3)))", "(4 * (2+ (5 + 3)))", "(2 * (3 + (5 +4)))", "(2 * (5 + (4+ 3)))"]},
+        {q: "Linear Search xấu nhất (không thấy X):", a: "A", o: ["Gmax = 1, Smax = 2N+1", "Gmax = 2, Smax = 2N+1", "Gmax = 1, Smax = 2N+2", "Gmax = 1, Smax = N+2"]},
+        {q: "Khai báo Node *NextNode trong DSLK đơn dùng để:", a: "B", o: ["Trỏ tới dữ liệu", "Quản lý địa chỉ phần tử kế tiếp", "Trỏ tới cuối", "Quản lý địa chỉ phần tử cuối"]},
+        {q: "Quy tắc duyệt cây Postorder:", a: "C", o: ["Trái -> Gốc -> Phải", "Gốc -> Trái -> Phải", "Trái -> Phải -> Gốc", "Gốc -> Trái -> Phải"]},
+        {q: "Đặc điểm giải thuật đệ quy:", a: "D", o: ["Có lời gọi chính nó", "Kích thước bài toán thu nhỏ", "Có trường hợp suy biến", "Tất cả đều đúng"]},
+        {q: "BST xóa nút X bất kỳ:", a: "B", o: ["Chỉ việc xóa", "Dùng nút cực phải cây trái hoặc cực trái cây phải", "Không xóa được", "Tìm nút lớn nhất cây phải"]},
+        {q: "Dữ liệu n đủ nhỏ, nên dùng:", a: "C", o: ["Quicksort", "Heapsort", "Selection sort", "Mergesort"]},
+        {q: "Ngăn xếp (Stack):", a: "A", o: ["Thêm và xóa ở Đỉnh", "Thêm đầu không xóa được", "Thêm xóa ở bất kỳ", "Thêm một đầu xóa đầu kia"]},
+        {q: "Dữ liệu n lớn, nên dùng:", a: "A", o: ["Merge sort/Heap sort", "Heap sort/Quick sort", "Selection/Insert", "Bubble/Selection"]},
+        {q: "Lưu cây nhị phân dạng mảng, cha ở 3, con phải ở:", a: "D", o: ["2", "4", "6", "7"]},
+        {q: "Dãy {6 1 3 0 5 7 9 2 8 4} sau lặp 1 Select Sort: {0 1 3 6 5 7 9 2 8 4}. Sau lặp 2 là:", a: "B", o: ["{0 1 2...}", "{0 1 3 6 5 7 9 2 8 4} (1 bé thứ 2 đã ở đúng chỗ)", "{...}", "{...}"]},
+        {q: "Dãy {6 1 3 0 5 7 9 2 8 4} sau lặp 1: {0 1 3 6 5 7 9 2 8 4}. Sau lặp 3 là:", a: "A", o: ["{0 1 2 6 5 7 9 3 8 4}", "{0 1 2 3...}", "{...}", "{...}"]},
+        {q: "Binary Search số 10 trong 10 11 14 32 36 43 55 57 87 97. Phân đoạn 1 là:", a: "B", o: ["[14 32 10...]", "[10 11 14 32 36]", "[...]", "[...]"]},
+        {q: "Độ cao của cây:", a: "D", o: ["Cấp lớn nhất", "Số cây con", "Số lượng nút", "Mức lớn nhất của cây"]},
+        {q: "Cây T duyệt Preorder:", a: "D", o: ["ADBCEFG", "AEBDCGF", "AEDBCFG", "ABDECFG"]},
+        {q: "Mảng 2 chiều 8x9 ưu tiên hàng, F(1,1) ở 50, size 3. F(5,7) ở:", a: "B", o: ["148", "152", "162", "176"]},
+        {q: "Mảng 2 chiều 8x9 ưu tiên cột, F(1,1) ở 230, size 3. F(3,7) ở:", a: "C", o: ["378", "382", "380", "420"]},
+        {q: "Tư tưởng giải thuật tìm kiếm tuần tự là:", a: "C", o: ["Dựa vào cây BST", "Chia dãy dựa vào khóa", "So sánh X lần lượt từ đầu dãy", "So sánh X với phần tử giữa"]},
+        {q: "Trong các giải thuật sắp xếp, giải thuật áp dụng 'Chia để trị' là:", a: "D", o: ["Quick sort, Heap sort", "Quick sort, Insert sort", "Quick sort, Bubble sort", "Quick sort, Merge sort"]},
+        {q: "Đặc điểm mô tả cây nhị phân hoàn chỉnh:", a: "A", o: ["Mỗi nút tối đa 2 con", "Nhiều hơn 2 con", "Không con", "Hơn 2 con"]},
+        {q: "Trong cây BST, khóa nút con phải so với cha:", a: "A", o: ["Lớn hơn", "Nhỏ hơn", "Bằng", "Không quy tắc"]}
+    ];
+
+    let currentQuestions = [];
+    let timeLeft = 60 * 60; // 60 phút
+    let timerInterval;
+
+    function initQuiz() {
+        // Lấy ngẫu nhiên 50 câu từ ngân hàng
+        currentQuestions = [...bank].sort(() => 0.5 - Math.random()).slice(0, 50);
+        
+        const container = document.getElementById('quiz-container');
+        container.innerHTML = '';
+
+        currentQuestions.forEach((item, i) => {
+            const labels = ['A', 'B', 'C', 'D'];
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            block.id = `q-block-${i}`;
+            
+            let optionsHtml = '';
+            item.o.forEach((opt, idx) => {
+                optionsHtml += `
+                    <div class="option-item" id="opt-container-${i}-${labels[idx]}">
+                        <label>
+                            <input type="radio" name="q${i}" value="${labels[idx]}" class="mr-3">
+                            <span>${labels[idx]}. ${opt}</span>
+                        </label>
+                    </div>
+                `;
+            });
+
+            block.innerHTML = `
+                <p class="text-lg font-bold mb-4">Câu ${i+1}: ${item.q}</p>
+                <div class="options-list">${optionsHtml}</div>
+                <div id="correct-msg-${i}" class="hidden mt-3 font-bold text-green-600">Đáp án đúng: ${item.a}</div>
+            `;
+            container.appendChild(block);
+        });
+
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitQuiz();
+            }
+            timeLeft--;
+        }, 1000);
+    }
+
+    function submitQuiz() {
+        clearInterval(timerInterval);
+        let score = 0;
+        
+        currentQuestions.forEach((item, i) => {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const correctMsg = document.getElementById(`correct-msg-${i}`);
+            
+            correctMsg.classList.remove('hidden');
+            
+            if (selected) {
+                const labelContainer = document.getElementById(`opt-container-${i}-${selected.value}`);
+                if (selected.value === item.a) {
+                    score++;
+                    labelContainer.classList.add('correct');
+                } else {
+                    labelContainer.classList.add('wrong');
+                }
+            }
+            document.getElementById(`opt-container-${i}-${item.a}`).classList.add('correct');
+        });
+
+        document.getElementById('submit-btn').classList.add('hidden');
+        document.getElementById('result-summary').classList.remove('hidden');
+        
+        const scoreText = `${score}/50`;
+        const finalScorePoint = (score / 50) * 10;
+        document.getElementById('final-score').innerText = scoreText;
+        
+        let comment = "";
+        if (finalScorePoint >= 8) comment = "Xuất sắc! Bạn đã nắm vững các kiến thức về CTDL & Giải thuật.";
+        else if (finalScorePoint >= 5) comment = "Đã đạt! Hãy luyện tập thêm để nâng cao điểm số.";
+        else comment = "Bạn cần cố gắng nhiều hơn để vượt qua kỳ thi này.";
+        
+        document.getElementById('score-comment').innerText = `${comment} (Điểm hệ 10: ${finalScorePoint.toFixed(2)})`;
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
