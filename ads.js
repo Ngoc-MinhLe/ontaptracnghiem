@@ -32,12 +32,18 @@ window.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(adsterraScript);
 
     // 4. PHÁT HIỆN TRÌNH CHẶN QUẢNG CÁO (ANTI-ADBLOCK)
+    // Nếu người dùng đã bấm xử lý thì không làm phiền lại trong phiên này
+    if (sessionStorage.getItem('adblock_dismissed')) return;
+
     setTimeout(() => {
         const fakeAd = document.createElement('div');
+        fakeAd.innerHTML = '&nbsp;'; // Thêm nội dung để tránh lỗi chiều cao = 0 tự nhiên
         fakeAd.className = 'adsbox ad-placement doubleclick ad-banner';
         fakeAd.style.display = 'block';
         fakeAd.style.position = 'absolute';
         fakeAd.style.top = '-9999px';
+        fakeAd.style.height = '1px'; // Gán kích thước rõ ràng
+        fakeAd.style.width = '1px';
         document.body.appendChild(fakeAd);
 
         setTimeout(() => {
@@ -53,7 +59,8 @@ window.addEventListener('DOMContentLoaded', () => {
                         <div style="font-size:48px; margin-bottom:12px;">😢</div>
                         <h4 style="margin:0 0 12px 0; color:#b45309; font-size:20px; font-weight:bold;">Bạn đang chặn quảng cáo?</h4>
                         <p style="margin:0 0 20px 0; font-size:15px; color:#4b5563; line-height:1.6;">Hệ thống được duy trì miễn phí nhờ một phần doanh thu quảng cáo. Tuy nhiên, trình duyệt của bạn (hoặc Cốc Cốc) đang chặn hiển thị mất rồi.<br><br>Vui lòng <b>tắt khiên bảo vệ</b> hoặc <b>trình chặn quảng cáo</b> cho trang web này để ủng hộ team nhé! ❤️</p>
-                        <button onclick="document.getElementById('anti-adblock-modal').remove()" style="background:#f59e0b; color:#fff; border:none; padding:12px 24px; border-radius:8px; font-size:15px; font-weight:bold; cursor:pointer; width:100%; box-shadow:0 4px 6px -1px rgba(245,158,11,0.2);">Đã tắt, tiếp tục ôn tập</button>
+                        <button onclick="sessionStorage.setItem('adblock_dismissed', 'true'); location.reload();" style="background:#f59e0b; color:#fff; border:none; padding:12px 24px; border-radius:8px; font-size:15px; font-weight:bold; cursor:pointer; width:100%; box-shadow:0 4px 6px -1px rgba(245,158,11,0.2); margin-bottom:12px;">Đã tắt, Tải lại trang</button>
+                        <button onclick="sessionStorage.setItem('adblock_dismissed', 'true'); document.getElementById('anti-adblock-modal').remove();" style="background:transparent; color:#6b7280; border:none; font-size:13px; cursor:pointer; text-decoration:underline;">Bỏ qua lần này</button>
                     </div>
                 `;
                 document.body.appendChild(modal);
