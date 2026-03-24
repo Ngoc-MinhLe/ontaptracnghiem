@@ -4,6 +4,7 @@
 
 // 1. CHÈN MÃ GOOGLE ADSENSE (Google Tự Động)
 // Khi bạn có tài khoản AdSense, chỉ cần xóa dấu /* và */ ở đoạn dưới, rồi thay mã ca-pub của bạn vào
+/*
 (function() {
     var adScript = document.createElement('script');
     adScript.async = true;
@@ -11,19 +12,21 @@
     adScript.crossOrigin = "anonymous";
     document.head.appendChild(adScript);
 })();
+*/
 
-// 2. CHÈN BANNER QUẢNG CÁO THỦ CÔNG (Affiliate/Sponsor)
+// 2. CHÈN BANNER QUẢNG CÁO ADSTERRA
 // Tự động chèn khối quảng cáo vào bất kỳ trang nào có thẻ <div id="ad-banner-slot">
 window.addEventListener('DOMContentLoaded', () => {
     const adSlots = document.querySelectorAll('#ad-banner-slot');
-    const bannerHTML = `
-        <a href="#" class="block bg-gray-200 rounded-xl overflow-hidden border border-gray-300 relative group text-center flex flex-col items-center justify-center h-20 md:h-28 shadow-inner hover:shadow-md transition-transform hover:scale-[1.01] duration-300">
-            <span class="bg-gray-700/50 text-white px-2 py-0.5 rounded text-[10px] font-bold absolute top-2 left-2 backdrop-blur-sm">Quảng cáo</span>
-            <i class="fas fa-bullhorn text-gray-400 text-3xl mb-1 md:mb-2"></i>
-            <p class="text-gray-500 font-medium text-sm md:text-base">Không gian dành cho Banner Quảng Cáo hoặc Đối tác tài trợ</p>
-        </a>
+    const adsterraBannerCode = `
+        <!-- DÁN MÃ BANNER (ví dụ: 728x90 hoặc 468x60) CỦA ADSTERRA VÀO ĐÂY -->
     `;
     adSlots.forEach(slot => {
-        slot.innerHTML = bannerHTML;
+        slot.innerHTML = adsterraBannerCode;
     });
+
+    // 3. MÃ ADSTERRA TỰ ĐỘNG CHÈN VÀO CUỐI TRANG (NGAY TRÊN THẺ </BODY>)
+    const adsterraScript = document.createElement('script');
+    adsterraScript.src = "https://pl28968969.profitablecpmratenetwork.com/ae/81/99/ae8199e12c20894823b5c98b54726626.js";
+    document.body.appendChild(adsterraScript);
 });
