@@ -4,15 +4,13 @@
 
 // 1. CHÈN MÃ GOOGLE ADSENSE (Google Tự Động)
 // Khi bạn có tài khoản AdSense, chỉ cần xóa dấu /* và */ ở đoạn dưới, rồi thay mã ca-pub của bạn vào
-/*
 (function() {
     var adScript = document.createElement('script');
     adScript.async = true;
-    adScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX";
+    adScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9672443275074363";
     adScript.crossOrigin = "anonymous";
     document.head.appendChild(adScript);
 })();
-*/
 
 // 2. CHÈN BANNER QUẢNG CÁO THỦ CÔNG (Affiliate/Sponsor)
 // Tự động chèn khối quảng cáo vào bất kỳ trang nào có thẻ <div id="ad-banner-slot">
