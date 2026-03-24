@@ -25,36 +25,42 @@ window.addEventListener('DOMContentLoaded', () => {
         slot.innerHTML = adsterraBannerCode;
     });
 
-    // Hàm hiển thị hộp thoại xin tắt Adblock
-    const showAdblockModal = () => {
-        if (sessionStorage.getItem('adblock_dismissed')) return;
-        if (document.getElementById('anti-adblock-modal')) return;
-        
-        const modal = document.createElement('div');
-        modal.id = 'anti-adblock-modal';
-        modal.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:2147483647; display:flex; align-items:center; justify-content:center; padding:20px; box-sizing:border-box; backdrop-filter:blur(3px);';
-        modal.innerHTML = `
-            <div style="background:#fff; padding:24px 20px; border-radius:16px; max-width:400px; width:100%; text-align:center; box-shadow:0 20px 25px -5px rgba(0,0,0,0.1); font-family:sans-serif;">
-                <div style="font-size:48px; margin-bottom:12px;">😢</div>
-                <h4 style="margin:0 0 12px 0; color:#b45309; font-size:20px; font-weight:bold;">Bạn đang chặn quảng cáo?</h4>
-                <p style="margin:0 0 20px 0; font-size:15px; color:#4b5563; line-height:1.6;">Hệ thống được duy trì miễn phí nhờ một phần doanh thu quảng cáo. Tuy nhiên, trình duyệt của bạn (hoặc Cốc Cốc) đang chặn hiển thị mất rồi.<br><br>Vui lòng <b>tắt khiên bảo vệ</b> hoặc <b>trình chặn quảng cáo</b> cho trang web này để ủng hộ team nhé! ❤️</p>
-                <button onclick="sessionStorage.setItem('adblock_dismissed', 'true'); location.reload();" style="background:#f59e0b; color:#fff; border:none; padding:12px 24px; border-radius:8px; font-size:15px; font-weight:bold; cursor:pointer; width:100%; box-shadow:0 4px 6px -1px rgba(245,158,11,0.2); margin-bottom:12px;">Đã tắt, Tải lại trang</button>
-                <button onclick="sessionStorage.setItem('adblock_dismissed', 'true'); document.getElementById('anti-adblock-modal').remove();" style="background:transparent; color:#6b7280; border:none; font-size:13px; cursor:pointer; text-decoration:underline;">Bỏ qua lần này</button>
-            </div>
-        `;
-        document.body.appendChild(modal);
-    };
-
     // 3. MÃ ADSTERRA TỰ ĐỘNG CHÈN VÀO CUỐI TRANG
     const adsterraScript = document.createElement('script');
     adsterraScript.type = 'text/javascript';
     adsterraScript.src = "https://pl28968969.profitablecpmratenetwork.com/ae/81/99/ae8199e12c20894823b5c98b54726626.js";
 
-    // 4. BẮT LỖI TRỰC TIẾP TỪ ADSTERRA (CHÍNH XÁC 100%)
-    // Nếu Cốc Cốc chặn mạng (không tải được script này), lập tức hiện thông báo
-    adsterraScript.onerror = () => {
-        showAdblockModal();
-    };
-
     document.body.appendChild(adsterraScript);
+
+    // 4. CHÈN LỜI KÊU GỌI ỦNG HỘ TỰ ĐỘNG (Dùng chung cho tất cả các môn)
+    const quizContainer = document.getElementById('quiz-container');
+    const adBannerSlot = document.getElementById('ad-banner-slot');
+    
+    // Chỉ chèn vào những trang có khung thi trắc nghiệm (để không đè lên trang chủ)
+    if (quizContainer && adBannerSlot && !document.getElementById('donation-appeal-block')) {
+        const donationBlock = document.createElement('div');
+        donationBlock.id = 'donation-appeal-block';
+        donationBlock.className = 'mb-8 bg-gradient-to-br from-white to-blue-50 border border-blue-100 rounded-2xl p-6 shadow-sm flex flex-col md:flex-row items-center gap-6';
+        donationBlock.innerHTML = `
+            <div class="flex-shrink-0 mx-auto md:mx-0">
+                <div class="inline-block p-1 bg-white rounded-xl shadow-md border-2 border-dashed border-blue-200">
+                    <div class="bg-gray-100 w-32 h-32 flex items-center justify-center rounded-lg overflow-hidden">
+                        <img src="QRdonate.jpg" alt="Mã QR Ủng hộ" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'p-2 text-center text-[10px] text-gray-400 font-medium\\'>Lỗi tải ảnh QR</div>'">
+                    </div>
+                </div>
+            </div>
+            <div class="text-center md:text-left flex-grow text-gray-800">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold mb-2">
+                    <i class="fas fa-heart text-blue-700"></i> ỦNG HỘ DUY TRÌ SERVER
+                </div>
+                <h3 class="text-lg font-bold text-gray-800 mb-2 italic">Đồng hành cùng hệ thống ôn tập</h3>
+                <p class="text-gray-600 text-sm leading-relaxed mb-2">
+                    Hệ thống vận hành phi lợi nhuận hỗ trợ sinh viên. Mọi đóng góp (mời team cốc cà phê ☕) hoặc một hành động nhỏ như <strong>tắt trình chặn quảng cáo (tắt khiên bảo vệ trên Cốc Cốc/Brave)</strong> đều sẽ giúp team có thêm kinh phí duy trì server. Trân trọng cảm ơn sự ủng hộ của các bạn! ❤️
+                </p>
+                <p class="text-xs font-bold text-blue-800 italic">Quét mã QR hoặc click vào quảng cáo để tiếp thêm động lực cho team phát triển nhé!</p>
+            </div>
+        `;
+        // Chèn hộp kêu gọi vào ngay giữa quảng cáo banner và danh sách câu hỏi
+        adBannerSlot.parentNode.insertBefore(donationBlock, adBannerSlot.nextSibling);
+    }
 });
