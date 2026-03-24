@@ -27,6 +27,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // 3. MÃ ADSTERRA TỰ ĐỘNG CHÈN VÀO CUỐI TRANG (NGAY TRÊN THẺ </BODY>)
     const adsterraScript = document.createElement('script');
+    adsterraScript.type = 'text/javascript';
     adsterraScript.src = "https://pl28968969.profitablecpmratenetwork.com/ae/81/99/ae8199e12c20894823b5c98b54726626.js";
     document.body.appendChild(adsterraScript);
 });
