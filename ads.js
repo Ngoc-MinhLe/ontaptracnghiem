@@ -44,14 +44,19 @@ window.addEventListener('DOMContentLoaded', () => {
             const isBlocked = fakeAd.offsetHeight === 0 || window.getComputedStyle(fakeAd).display === 'none';
             fakeAd.remove();
             if (isBlocked) {
-                // Hiển thị hộp thoại nhỏ nhắc nhở (Toast Notification)
-                const toast = document.createElement('div');
-                toast.innerHTML = `<div style="position:fixed; bottom:20px; right:20px; background:#fff; border-left:4px solid #f59e0b; padding:16px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.1); z-index:9999; max-width:300px; font-family:sans-serif;">
-                    <h4 style="margin:0 0 8px 0; color:#b45309; font-size:16px; font-weight:bold;">Đang chặn quảng cáo? 😢</h4>
-                    <p style="margin:0 0 12px 0; font-size:13px; color:#4b5563; line-height:1.5;">Hệ thống được duy trì miễn phí nhờ một phần doanh thu quảng cáo. Bạn hãy tắt trình chặn quảng cáo (hoặc khiên bảo vệ của Cốc Cốc/Brave) cho trang web này để ủng hộ team nhé! ❤️</p>
-                    <button onclick="this.parentElement.parentElement.remove()" style="background:#f3f4f6; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-size:12px; font-weight:bold; color:#374151;">Đã hiểu và Đóng</button>
-                </div>`;
-                document.body.appendChild(toast);
+                // Hiển thị Modal Popup ngay giữa màn hình (Tối ưu cho cả Mobile & Desktop)
+                const modal = document.createElement('div');
+                modal.id = 'anti-adblock-modal';
+                modal.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:2147483647; display:flex; align-items:center; justify-content:center; padding:20px; box-sizing:border-box; backdrop-filter:blur(3px);';
+                modal.innerHTML = `
+                    <div style="background:#fff; padding:24px 20px; border-radius:16px; max-width:400px; width:100%; text-align:center; box-shadow:0 20px 25px -5px rgba(0,0,0,0.1); font-family:sans-serif;">
+                        <div style="font-size:48px; margin-bottom:12px;">😢</div>
+                        <h4 style="margin:0 0 12px 0; color:#b45309; font-size:20px; font-weight:bold;">Bạn đang chặn quảng cáo?</h4>
+                        <p style="margin:0 0 20px 0; font-size:15px; color:#4b5563; line-height:1.6;">Hệ thống được duy trì miễn phí nhờ một phần doanh thu quảng cáo. Tuy nhiên, trình duyệt của bạn (hoặc Cốc Cốc) đang chặn hiển thị mất rồi.<br><br>Vui lòng <b>tắt khiên bảo vệ</b> hoặc <b>trình chặn quảng cáo</b> cho trang web này để ủng hộ team nhé! ❤️</p>
+                        <button onclick="document.getElementById('anti-adblock-modal').remove()" style="background:#f59e0b; color:#fff; border:none; padding:12px 24px; border-radius:8px; font-size:15px; font-weight:bold; cursor:pointer; width:100%; box-shadow:0 4px 6px -1px rgba(245,158,11,0.2);">Đã tắt, tiếp tục ôn tập</button>
+                    </div>
+                `;
+                document.body.appendChild(modal);
             }
         }, 200);
     }, 2000);
