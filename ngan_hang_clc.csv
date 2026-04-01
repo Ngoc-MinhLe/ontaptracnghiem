@@ -1,0 +1,651 @@
+﻿Chương;LV;TT;Nội dung câu hỏi;Đáp án;Thang điểm
+;;;Chương 1;;
+;;;Nhóm câu hỏi ở mức độ NHẬN BIẾT/ THÔNG HIỂU (A);;
+Chương 1;Dễ;1;Tốc độ đọc/ghi dữ liệu giữu ổ cứng SSD và HDD;;0,2
+Chương 1;Dễ;;Tốc độ đọc/ghi dữ liệu của ổ cứng bằng nhau.;;
+Chương 1;Dễ;;Tốc độ đọc/ghi dữ liệu của ổ cứng HDD nhanh hơn.;;
+Chương 1;Dễ;;Tốc độ đọc/ghi dữ liệu của ổ cứng SSD nhanh hơn.;C;
+Chương 1;Dễ;;Tốc độ đọc/ghi dữ liệu của ổ cứng SSD chậm hơn.;;
+Chương 1;Dễ;2;Thiết bị nào giúp làm mát CPU?;;0,2
+Chương 1;Dễ;;Case;;
+Chương 1;Dễ;;Heatsink/Fan;B;
+Chương 1;Dễ;;RAM;;
+Chương 1;Dễ;;SSD;;
+Chương 1;Dễ;3;RAM DDR4 thường có bao nhiêu chân?;;0,2
+Chương 1;Dễ;;240;;
+Chương 1;Dễ;;288;B;
+Chương 1;Dễ;;184;;
+Chương 1;Dễ;;200;;
+Chương 1;Dễ;4;RAM có chức năng chính là gì?;;0,2
+Chương 1;Dễ;;Lưu trữ tạm thời;A;
+Chương 1;Dễ;;Lưu trữ lâu dài;;
+Chương 1;Dễ;;Xuất hình ảnh;;
+Chương 1;Dễ;;Cấp điện;;
+Chương 1;Dễ;5;Ổ SSD SATA thường có kích thước phổ biến nào?;;0,2
+Chương 1;Dễ;;3.5 inch;;
+Chương 1;Dễ;;2.5 inch;B;
+Chương 1;Dễ;;5 inch;;
+Chương 1;Dễ;;1.8 inch;;
+Chương 1;Dễ;6;Ổ SSD SATA cần nguồn từ:;;0,2
+Chương 1;Dễ;;Cáp PCI-E;;
+Chương 1;Dễ;;Cáp SATA power;B;
+Chương 1;Dễ;;Cáp VGA;;
+Chương 1;Dễ;;Cáp USB;;
+Chương 1;Dễ;7;Ổ cứng SSD lưu dữ liệu bằng công nghệ nào?;;0,2
+Chương 1;Dễ;;ổ SSD sử công nghệ lưu trữ từ tính.;;
+Chương 1;Dễ;;ổ SSD sử công nghệ lưu trữ flash.;B;
+Chương 1;Dễ;;ổ SSD sử công nghệ lưu trữ đĩa từ và đầu kim đọc dữ liệu;;
+Chương 1;Dễ;;ổ SSD chỉ để đọc dữ liệu. Dữ liệu được ghi vào từ lúc sản xuất.;;
+Chương 1;Dễ;8;Nguồn máy tính còn gọi là gì?;;0,2
+Chương 1;Dễ;;GPU;;
+Chương 1;Dễ;;PSU;B;
+Chương 1;Dễ;;UPS;;
+Chương 1;Dễ;;ROM;;
+Chương 1;Dễ;9;Nếu mainboard hỗ trợ DDR5, RAM DDR4 sẽ:;;0,2
+Chương 1;Dễ;;Chạy chậm;;
+Chương 1;Dễ;;Không lắp được;B;
+Chương 1;Dễ;;Chạy bình thường;;
+Chương 1;Dễ;;Chạy nửa tốc độ;;
+Chương 1;Dễ;10;Nếu CPU không đúng socket với mainboard thì:;;0,2
+Chương 1;Dễ;;Lắp được nhưng máy chạy chậm.;;
+Chương 1;Dễ;;Không lắp được CPU.;B;
+Chương 1;Dễ;;Không nhận RAM.;;
+Chương 1;Dễ;;Không có vấn đề gì.;;
+Chương 1;Dễ;11;Mainboard Micro-ATX có thể lắp vào case ATX không?;;0,2
+Chương 1;Dễ;;Có;A;
+Chương 1;Dễ;;Không;;
+Chương 1;Dễ;;Chỉ khi dùng adapter;;
+Chương 1;Dễ;;Chỉ khi nâng cấp BIOS;;
+Chương 1;Dễ;12;Mainboard là gì?;;0,2
+Chương 1;Dễ;;Thiết bị lưu trữ;;
+Chương 1;Dễ;;Bo mạch chủ;B;
+Chương 1;Dễ;;Thiết bị xuất hình;;
+Chương 1;Dễ;;Thiết bị nhập;;
+Chương 1;Dễ;13;CPU có cache L1, L2, L3. Trong đó cache nhanh nhất là:;;0,2
+Chương 1;Dễ;;L1;A;
+Chương 1;Dễ;;L2;;
+Chương 1;Dễ;;L3;;
+Chương 1;Dễ;;Như nhau, chỉ khác về dung lượng;;
+;;;Nhóm câu hỏi ở mức độ VẬN DỤNG (B);;
+Chương 1;Trung bình;1;Thông tin “Intel® Core™ i9-8950HK, 4.80 GHz, 12 MB Intel® Smart Cache” mô tả:;;0,2
+Chương 1;Trung bình;;Bộ nhớ cache L1 là 12 MB;;
+Chương 1;Trung bình;;Bộ nhớ cache L2 là 12 MB;;
+Chương 1;Trung bình;;Bộ nhớ cache L3 là 12 MB;C;
+Chương 1;Trung bình;;Bộ nhớ cache L1+L2+L3 là 12 MB;;
+Chương 1;Trung bình;2;Thông tin “Intel® Core™ i9-8950HK, 4.80 GHz, 12 MB Intel® Smart Cache” mô tả:;;0,2
+Chương 1;Trung bình;;thế hệ thứ 8;A;
+Chương 1;Trung bình;;thế hệ thứ 9;;
+Chương 1;Trung bình;;thế hệ thứ 12;;
+Chương 1;Trung bình;;CPU có 9 nhân;;
+Chương 1;Trung bình;3;Thông số Dual Channel RAM giúp:;;0,2
+Chương 1;Trung bình;;tăng dung lượng ổ cứng;;
+Chương 1;Trung bình;;tăng số nhân CPU;;
+Chương 1;Trung bình;;tăng băng thông truy cập bộ nhớ;C;
+Chương 1;Trung bình;;tăng dung lượng cache;;
+Chương 1;Trung bình;4;Sử dụng 2 thanh RAM cùng loại, khác bus nhưng khi lắp đặt vào bo mạch chủ thì:;;0,2
+Chương 1;Trung bình;;chạy theo bus thấp hơn;A;
+Chương 1;Trung bình;;chạy bus cao hơn;;
+Chương 1;Trung bình;;không nhận RAM;;
+Chương 1;Trung bình;;chạy bus bằng trung bình của 2 RAM;;
+Chương 1;Trung bình;5;Socket AM4 dùng cho CPU hãng nào?;;0,2
+Chương 1;Trung bình;;Intel;;
+Chương 1;Trung bình;;AMD;B;
+Chương 1;Trung bình;;Apple;;
+Chương 1;Trung bình;;Qualcomm;;
+Chương 1;Trung bình;6;SATA III có tốc độ tối đa lý thuyết bao nhiêu?;;0,2
+Chương 1;Trung bình;;300 MB/s;;
+Chương 1;Trung bình;;600 MB/s;B;
+Chương 1;Trung bình;;1 GB/s;;
+Chương 1;Trung bình;;6 GB/s;;
+Chương 1;Trung bình;7;RAM bus cao hơn thường mang lại lợi ích gì?;;0,2
+Chương 1;Trung bình;;Tăng tốc độ truyền dữ liệu;A;
+Chương 1;Trung bình;;Giảm dung lượng;;
+Chương 1;Trung bình;;Giảm điện áp;;
+Chương 1;Trung bình;;Giảm nhiệt;;
+Chương 1;Trung bình;8;Ổ SSD NVMe được cắm vào khe nào?;;0,2
+Chương 1;Trung bình;;SATA;;
+Chương 1;Trung bình;;PCIe;;
+Chương 1;Trung bình;;M.2;C;
+Chương 1;Trung bình;;IDE;;
+Chương 1;Trung bình;9;Ổ SSD nhanh hơn HDD chủ yếu vì lý do nào?;;0,2
+Chương 1;Trung bình;;Không có bộ nhớ;;
+Chương 1;Trung bình;;Không có bộ phận cơ học;B;
+Chương 1;Trung bình;;Không cần điện;;
+Chương 1;Trung bình;;Không cần mainboard;;
+Chương 1;Trung bình;10;Ổ HDD 7200RPM nhanh hơn 5400RPM vì lý do gì?;;0,2
+Chương 1;Trung bình;;Đĩa quay nhanh hơn;A;
+Chương 1;Trung bình;;Dung lượng lớn hơn;;
+Chương 1;Trung bình;;Có RAM;;
+Chương 1;Trung bình;;Có GPU;;
+Chương 1;Trung bình;11;Nếu CPU socket khác mainboard:;;0,2
+Chương 1;Trung bình;;không lắp được;B;
+Chương 1;Trung bình;;chạy chậm;;
+Chương 1;Trung bình;;không chạy được;;
+Chương 1;Trung bình;;RAM lỗi;;
+Chương 1;Trung bình;12;Máy tính bật nguồn nhưng tắt ngay sau vài giây, nguyên nhân có thể là:;;0,2
+Chương 1;Trung bình;;Nguồn không đủ công suất;A;
+Chương 1;Trung bình;;Lỗi ổ cứng hoặc đầy dữ liệu;;
+Chương 1;Trung bình;;RAM yếu;;
+Chương 1;Trung bình;;Cổng USB hỏng;;
+Chương 1;Trung bình;13;Mainboard Mini-ITX là loại thường dùng cho:;;0,2
+Chương 1;Trung bình;;Máy nhỏ gọn;A;
+Chương 1;Trung bình;;Server lớn;;
+Chương 1;Trung bình;;Workstation;;
+Chương 1;Trung bình;;Gaming tower;;
+Chương 1;Trung bình;14;Mainboard Micro‑ATX nhỏ hơn loại nào?;;0,2
+Chương 1;Trung bình;;ATX;A;
+Chương 1;Trung bình;;Mini‑ITX;;
+Chương 1;Trung bình;;Nano‑ITX;;
+Chương 1;Trung bình;;Flex‑ATX;;
+Chương 1;Trung bình;15;Mainboard chỉ hỗ trợ RAM 2666MHz nhưng lắp RAM 3200MHz:;;0,2
+Chương 1;Trung bình;;RAM chạy 2666MHz;A;
+Chương 1;Trung bình;;RAM cháy;;
+Chương 1;Trung bình;;Máy không chạy;;
+Chương 1;Trung bình;;RAM chạy 3200MHz;;
+Chương 1;trung bình;16;Lắp CPU Intel Gen 12 cần loại socket nào?;;0,2
+Chương 1;trung bình;;LGA1151;;
+Chương 1;trung bình;;LGA1200;;
+Chương 1;trung bình;;LGA1700;C;
+Chương 1;trung bình;;AM4;;
+Chương 1;Trung bình;17;Khi lắp RAM sai khe trên mainboard hỗ trợ dual channel thì điều gì xảy ra?;;0,2
+Chương 1;Trung bình;;Không chạy dual channel;A;
+Chương 1;Trung bình;;Không lên nguồn;;
+Chương 1;Trung bình;;Hỏng RAM;;
+Chương 1;Trung bình;;Cháy main;;
+Chương 1;Trung bình;18;Khi lắp NVMe cần:;;0,2
+Chương 1;Trung bình;;khe M.2;A;
+Chương 1;Trung bình;;khe PCI;;
+Chương 1;Trung bình;;SATA;;
+Chương 1;Trung bình;;RAM slot;;
+Chương 1;Trung bình;19;Hai thanh RAM cùng loại DDR3 nhưng có bus là 1333MHz và 1600MHz thì khi cắm:;;0,2
+Chương 1;Trung bình;;Không chạy được;;
+Chương 1;Trung bình;;Chạy ở 2666 MHz;B;
+Chương 1;Trung bình;;Hỏng RAM;;
+Chương 1;Trung bình;;Không nhận RAM;;
+Chương 1;Trung bình;20;GPU rời cần cấp thêm nguồn từ đâu?;;0,2
+Chương 1;Trung bình;;PSU qua cáp PCIe;A;
+Chương 1;Trung bình;;RAM slot;;
+Chương 1;Trung bình;;SATA cable;;
+Chương 1;Trung bình;;USB port;;
+Chương 1;Trung bình;21;Điều kiện để RAM chạy Dual Channel;;0,2
+Chương 1;Trung bình;;Thiết bị phải có ít nhất 2 thanh RAM, cùng loại, cùng bus và có dung lượng giống nhau.;A;
+Chương 1;Trung bình;;Thiết bị chỉ cần cắm 2 thanh RAM trở lên.;;
+Chương 1;Trung bình;;Thiết bị phải có ít nhất 2 thanh RAM, cùng loại, cùng bus và không cần dung lượng giống nhau.;;
+Chương 1;Trung bình;;Thiết bị chỉ cần cắm ít nhất 2 thanh RAM cùng bus.;;
+Chương 1;Trung bình;22;Chuẩn giao tiếp của ổ SSD NVMe là gì?;;0,2
+Chương 1;Trung bình;;SATA;;
+Chương 1;Trung bình;;PCIe;B;
+Chương 1;Trung bình;;IDE;;
+Chương 1;Trung bình;;USB;;
+Chương 1;Trung bình;23;Card đồ họa rời được cắm vào khe nào trên mainboard?;;0,2
+Chương 1;Trung bình;;PCI;;
+Chương 1;Trung bình;;PCIe x16;B;
+Chương 1;Trung bình;;SATA;;
+Chương 1;Trung bình;;M.2;;
+;;;Chương 2;;
+;;;Nhóm câu hỏi ở mức độ NHẬN BIẾT/ THÔNG HIỂU (A);;
+Chương 2;Dễ;1;Thông số Socket CPU dùng để:;;0,2
+Chương 2;Dễ;;xác định loại bo mạch chủ tương thích;A;
+Chương 2;Dễ;;xác định loại RAM;;
+Chương 2;Dễ;;xác định dung lượng ổ cứng;;
+Chương 2;Dễ;;xác định card màn hình;;
+Chương 2;Dễ;2;Khe PCIe x16 thường dùng để lắp thiết bị nào?;;0,2
+Chương 2;Dễ;;RAM;;
+Chương 2;Dễ;;GPU;B;
+Chương 2;Dễ;;SSD;;
+Chương 2;Dễ;;CPU;;
+Chương 2;Dễ;3;CPU được lắp vào đâu trên mainboard?;;0,2
+Chương 2;Dễ;;PCIe slot;;
+Chương 2;Dễ;;RAM slot;;
+Chương 2;Dễ;;CPU socket;C;
+Chương 2;Dễ;;SATA port;;
+Chương 2;Dễ;4;CPU có Base Clock 2.8 GHz, Turbo Boost 4.0 GHz nghĩa là:;;0,2
+Chương 2;Dễ;;CPU có thể tự động tăng xung lên 4.0 GHz khi cần;A;
+Chương 2;Dễ;;CPU luôn chạy 4.0 GHz;;
+Chương 2;Dễ;;CPU không chạy dưới 4 GHz;;
+Chương 2;Dễ;;CPU chỉ chạy 2.8 GHz;;
+;;;Nhóm câu hỏi ở mức độ VẬN DỤNG (B);;
+Chương 2;Trung bình;1;RAM DDR4 không thể lắp vào khe DDR5 vì lý do chính nào?;;0,2
+Chương 2;Trung bình;;Khác dung lượng;;
+Chương 2;Trung bình;;Khác vị trí rãnh;B;
+Chương 2;Trung bình;;Khác hãng;;
+Chương 2;Trung bình;;Khác màu;;
+Chương 2;Trung bình;2;Nếu PSU công suất quá thấp có thể gây ra hiện tượng gì?;;0,2
+Chương 2;Trung bình;;Máy tắt đột ngột;A;
+Chương 2;Trung bình;;RAM tăng dung lượng;;
+Chương 2;Trung bình;;SSD nhanh hơn;;
+Chương 2;Trung bình;;GPU mạnh hơn;;
+Chương 2;Trung bình;3;Máy bật nhưng không lên hình, nguyên nhân phổ biến nhất khi lắp ráp?;;0,2
+Chương 2;Trung bình;;RAM lỏng;A;
+Chương 2;Trung bình;;Chuột lỗi;;
+Chương 2;Trung bình;;Bàn phím lỗi;;
+Chương 2;Trung bình;;Loa lỗi;;
+Chương 2;Trung bình;4;Lắp SSD NVMe vào khe SATA:;;0,2
+Chương 2;Trung bình;;Không lắp được;B;
+Chương 2;Trung bình;;Chạy chậm;;
+Chương 2;Trung bình;;Chạy bình thường;;
+Chương 2;Trung bình;;Không nhận RAM;;
+Chương 2;Trung bình;5;Lắp SSD NVMe nhưng BIOS không nhận. Nguyên nhân có thể là gì?;;0,2
+Chương 2;Trung bình;;Main không hỗ trợ NVMe;A;
+Chương 2;Trung bình;;RAM lỗi;;
+Chương 2;Trung bình;;GPU yếu;;
+Chương 2;Trung bình;;Màn hình hỏng;;
+Chương 2;Trung bình;6;Khe M.2 trên mainboard thường dùng để lắp linh kiện nào?;;0,2
+Chương 2;Trung bình;;RAM;;
+Chương 2;Trung bình;;SSD NVMe;B;
+Chương 2;Trung bình;;GPU;;
+Chương 2;Trung bình;;CPU;;
+Chương 2;Trung bình;7;CPU quá nhiệt thường do nguyên nhân nào?;;0,2
+Chương 2;Trung bình;;Thiếu keo tản nhiệt;A;
+Chương 2;Trung bình;;Thiếu RAM;;
+Chương 2;Trung bình;;Ổ cứng chậm;;
+Chương 2;Trung bình;;Thiếu chuột;;
+;;;Chương 3 & 4;;
+;;;Nhóm câu hỏi ở mức độ VẬN DỤNG (B);;
+Chương 3 & 4;Trung bình;1;Trong quá trình tạo USB boot, thao tác “Start” trong Rufus có nghĩa là:;;0,2
+Chương 3 & 4;Trung bình;;Bắt đầu xóa Windows;;
+Chương 3 & 4;Trung bình;;Bắt đầu xóa dữ liệu ổ cứng;;
+Chương 3 & 4;Trung bình;;Bắt đầu ghi file ISO vào USB;C;
+Chương 3 & 4;Trung bình;;Tăng tốc USB;;
+Chương 3 & 4;Trung bình;2;Trong Norton Ghost, để sao lưu toàn bộ ổ đĩa, chọn:;;0,2
+Chương 3 & 4;Trung bình;;Partition to Image;;
+Chương 3 & 4;Trung bình;;Image to Disk;;
+Chương 3 & 4;Trung bình;;Disk to Partition;;
+Chương 3 & 4;Trung bình;;Disk to Image;D;
+Chương 3 & 4;Trung bình;3;Trong Hệ điều hành Windows, công cụ nào dùng để tạo bản sao toàn bộ hệ thống?;;0,2
+Chương 3 & 4;Trung bình;;Disk Cleanup;;
+Chương 3 & 4;Trung bình;;System Image Backup;B;
+Chương 3 & 4;Trung bình;;Device Manager;;
+Chương 3 & 4;Trung bình;;Task Manager;;
+Chương 3 & 4;Trung bình;4;Thiết bị lưu trữ nào phù hợp nhất để backup dài hạn?;;0,2
+Chương 3 & 4;Trung bình;;USB;;
+Chương 3 & 4;Trung bình;;RAM;;
+Chương 3 & 4;Trung bình;;HDD;C;
+Chương 3 & 4;Trung bình;;Cache;;
+Chương 3 & 4;Trung bình;5;Sau khi cài driver mới, Windows bị màn hình xanh. Giải pháp tốt nhất:;;0,2
+Chương 3 & 4;Trung bình;;Thay SSD;;
+Chương 3 & 4;Trung bình;;Rollback driver;B;
+Chương 3 & 4;Trung bình;;Format ổ cứng;;
+Chương 3 & 4;Trung bình;;Cài Windows mới;;
+Chương 3 & 4;Trung bình;6;Phân vùng hệ thống (System Partition) trong GPT thường có định dạng:;;0,2
+Chương 3 & 4;Trung bình;;FAT32;;
+Chương 3 & 4;Trung bình;;exFAT;;
+Chương 3 & 4;Trung bình;;NTFS;C;
+Chương 3 & 4;Trung bình;;RAW;;
+Chương 3 & 4;Trung bình;7;Phần mềm nào thường dùng để backup hệ điều hành Windows?;;0,2
+Chương 3 & 4;Trung bình;;Disk Cleanup;;
+Chương 3 & 4;Trung bình;;Acronis True Image;B;
+Chương 3 & 4;Trung bình;;Device Manager;;
+Chương 3 & 4;Trung bình;;Task Manager;;
+Chương 3 & 4;Trung bình;8;Phần mềm dùng để tạo file .TIB là:;;0,2
+Chương 3 & 4;Trung bình;;Norton Ghost;;
+Chương 3 & 4;Trung bình;;Rufus;;
+Chương 3 & 4;Trung bình;;Acronis True Image;B;
+Chương 3 & 4;Trung bình;;WinRAR;;
+Chương 3 & 4;Trung bình;9;Nếu pin CMOS hết, máy sẽ gặp hiện tượng:;;0,2
+Chương 3 & 4;Trung bình;;Không nhận VGA;;
+Chương 3 & 4;Trung bình;;Mất dữ liệu ổ cứng;;
+Chương 3 & 4;Trung bình;;Không nhận RAM;;
+Chương 3 & 4;Trung bình;;Mất thời gian hệ thống;D;
+Chương 3 & 4;Trung bình;10;Nếu ổ cứng đang ở chuẩn MBR, muốn chuyển sang UEFI cần:;;0,2
+Chương 3 & 4;Trung bình;;Chuyển sang GPT;A;
+Chương 3 & 4;Trung bình;;Format ổ cứng;;
+Chương 3 & 4;Trung bình;;Cài lại BIOS;;
+Chương 3 & 4;Trung bình;;Nâng cấp RAM;;
+Chương 3 & 4;Trung bình;11;Nếu hệ điều hành Windows lỗi, phương pháp phục hồi nhanh nhất là:;;0,2
+Chương 3 & 4;Trung bình;;Restore từng file;;
+Chương 3 & 4;Trung bình;;Restore System Image;B;
+Chương 3 & 4;Trung bình;;Reinstall Windows;;
+Chương 3 & 4;Trung bình;;Format ổ cứng;;
+Chương 3 & 4;Trung bình;12;Nếu hệ điều hành Windows lỗi nhưng có System Image, cần:;;0,2
+Chương 3 & 4;Trung bình;;Cài lại hệ điều hành;;
+Chương 3 & 4;Trung bình;;Backup system image;;
+Chương 3 & 4;Trung bình;;restore system image;B;
+Chương 3 & 4;Trung bình;;Format ổ cứng và cài Windows mới;;
+Chương 3 & 4;Trung bình;13;Nếu cài Windows trên ổ MBR nhưng BIOS đang ở UEFI, sẽ xảy ra:;;0,2
+Chương 3 & 4;Trung bình;;Cài bình thường;;
+Chương 3 & 4;Trung bình;;Báo lỗi không cài được;B;
+Chương 3 & 4;Trung bình;;Máy chạy chậm;;
+Chương 3 & 4;Trung bình;;Không nhận RAM;;
+Chương 3 & 4;Trung bình;14;Nếu BIOS để chế độ IDE thay vì AHCI, hậu quả có thể là:;;0,2
+Chương 3 & 4;Trung bình;;RAM chạy chậm;A;
+Chương 3 & 4;Trung bình;;SSD chạy chậm;;
+Chương 3 & 4;Trung bình;;CPU chạy chậm;;
+Chương 3 & 4;Trung bình;;VGA lỗi;;
+Chương 3 & 4;Trung bình;15;Máy tính khởi động nhưng dừng ở màn hình “Boot Device Not Found”. Nguyên nhân phổ biến là:;;0,2
+Chương 3 & 4;Trung bình;;Windows chưa kích hoạt;;
+Chương 3 & 4;Trung bình;;BIOS không nhận ổ cứng hoặc sai thứ tự boot;B;
+Chương 3 & 4;Trung bình;;Sai key bản quyền;;
+Chương 3 & 4;Trung bình;;Thiếu driver chipset;;
+Chương 3 & 4;Trung bình;16;Máy tính hiển thị lỗi “Operating System Not Found”. Nguyên nhân:;;0,2
+Chương 3 & 4;Trung bình;;Không có quyền Administrator;;
+Chương 3 & 4;Trung bình;;Ổ cứng không có hệ điều hành;B;
+Chương 3 & 4;Trung bình;;Windows chưa kích hoạt;;
+Chương 3 & 4;Trung bình;;Sửa lỗi hệ thống hoặc driver;;
+Chương 3 & 4;Trung bình;17;Máy tính báo “Disk 100% usage” trong Task Manager. Nguyên nhân có thể là:;;0,2
+Chương 3 & 4;Trung bình;;RAM quá lớn;;
+Chương 3 & 4;Trung bình;;Driver USB chưa cài hoặc bị lỗi;;
+Chương 3 & 4;Trung bình;;Ổ cứng hoạt động quá tải;C;
+Chương 3 & 4;Trung bình;;Driver mạng lỗi;;
+Chương 3 & 4;Trung bình;18;Khi cài Windows từ USB mà không boot được, cần kiểm tra:;;0,2
+Chương 3 & 4;Trung bình;;Boot Priority;A;
+Chương 3 & 4;Trung bình;;Ổ cứng;;
+Chương 3 & 4;Trung bình;;RAM;;
+Chương 3 & 4;Trung bình;;VGA;;
+Chương 3 & 4;Trung bình;19;"Khi cài phần mềm xuất hiện thông báo missing DLL.
+Nguyên nhân:";;0,2
+Chương 3 & 4;Trung bình;;Chưa có bản quyền;;
+Chương 3 & 4;Trung bình;;Chưa cài driver;;
+Chương 3 & 4;Trung bình;;Thiếu thư viện hệ thống;C;
+Chương 3 & 4;Trung bình;;Thiếu driver;;
+Chương 3 & 4;Trung bình;20;Khi cài phần mềm Office xuất hiện thông báo product key required.;;0,2
+Chương 3 & 4;Trung bình;;Đã có bản quyền;;
+Chương 3 & 4;Trung bình;;Không đúng key bản quyền;;
+Chương 3 & 4;Trung bình;;Cần kích hoạt bản quyền;C;
+Chương 3 & 4;Trung bình;;Office bị lỗi;;
+Chương 3 & 4;Trung bình;21;Hệ điều hành Windows hiển thị thông báo “Access Denied” khi cài phần mềm. Nguyên nhân:;;0,2
+Chương 3 & 4;Trung bình;;Thông báo RAM đầy;;
+Chương 3 & 4;Trung bình;;Không có quyền Administrator;B;
+Chương 3 & 4;Trung bình;;Sai key bản quyền;;
+Chương 3 & 4;Trung bình;;Thông báo ổ cứng đầy;;
+Chương 3 & 4;Trung bình;22;Hệ điều hành Windows báo lỗi “Windows cannot connect to this network”. Nguyên nhân có thể là:;;0,2
+Chương 3 & 4;Trung bình;;Giao tiếp mạng lỗi;A;
+Chương 3 & 4;Trung bình;;Quá nhiệt CPU hoặc lỗi phần cứng;;
+Chương 3 & 4;Trung bình;;RAM gần đầy;;
+Chương 3 & 4;Trung bình;;Không có quyền Administrator;;
+Chương 3 & 4;Trung bình;23;Hệ điều hành Windows báo lỗi “Low Disk Space”. Điều này nghĩa là:;;0,2
+Chương 3 & 4;Trung bình;;Ổ cứng gần đầy;A;
+Chương 3 & 4;Trung bình;;Không nhận ổ cứng;;
+Chương 3 & 4;Trung bình;;Lỗi ổ cứng;;
+Chương 3 & 4;Trung bình;;CPU gần đầy;;
+Chương 3 & 4;Trung bình;24;File sao lưu của Acronis True Image có định dạng:;;0,2
+Chương 3 & 4;Trung bình;;.iso;;
+Chương 3 & 4;Trung bình;;.gho;;
+Chương 3 & 4;Trung bình;;.tib;C;
+Chương 3 & 4;Trung bình;;.img;;
+Chương 3 & 4;Trung bình;25;Định dạng USB phổ biến để tạo USB boot Windows là:;;0,2
+Chương 3 & 4;Trung bình;;GPT;;
+Chương 3 & 4;Trung bình;;FAT32;B;
+Chương 3 & 4;Trung bình;;FAT16;;
+Chương 3 & 4;Trung bình;;exFAT;;
+Chương 3 & 4;Trung bình;26;Để ghost lại hệ điều hành từ file .gho, chọn:;;0,2
+Chương 3 & 4;Trung bình;;Disk to Image;;
+Chương 3 & 4;Trung bình;;Partition to Image;;
+Chương 3 & 4;Trung bình;;Image to Partition;C;
+Chương 3 & 4;Trung bình;;Format Disk;;
+Chương 3 & 4;Trung bình;27;Để cài Windows theo chuẩn UEFI, ổ cứng phải sử dụng:;;0,2
+Chương 3 & 4;Trung bình;;MBR;;
+Chương 3 & 4;Trung bình;;NTFS;;
+Chương 3 & 4;Trung bình;;FAT16;;
+Chương 3 & 4;Trung bình;;GPT;D;
+Chương 3 & 4;Trung bình;28;Công cụ phổ biến để tạo USB boot Windows là:;;0,2
+Chương 3 & 4;Trung bình;;LDPlayer;;
+Chương 3 & 4;Trung bình;;Excel;;
+Chương 3 & 4;Trung bình;;Rufus;C;
+Chương 3 & 4;Trung bình;;BlueStacks;;
+Chương 3 & 4;Trung bình;29;Chế độ UEFI khác BIOS Legacy ở điểm nào quan trọng nhất?;;
+Chương 3 & 4;Trung bình;;Hỗ trợ ổ cứng dung lượng nhỏ hơn;;
+Chương 3 & 4;Trung bình;;Hỗ trợ GPT và ổ > 2TB;B;
+Chương 3 & 4;Trung bình;;Không cần bootloader;;
+Chương 3 & 4;Trung bình;;Không hỗ trợ hệ điều hành;;
+;;;Chương 5;;
+;;;Nhóm câu hỏi ở mức độ NHẬN BIẾT/ THÔNG HIỂU (A);;
+Chương 5;Dễ;1;Sau khi lắp CPU nhưng máy tự tắt sau vài giây, nguyên nhân có thể là:;;0,2
+Chương 5;Dễ;;Không cắm SSD;;
+Chương 5;Dễ;;CPU quá nóng;B;
+Chương 5;Dễ;;Chuột lỗi;;
+Chương 5;Dễ;;Thiếu RAM;;
+Chương 5;Dễ;2;Nếu thiếu bộ phận tản nhiệt cho CPU thì?;;0,2
+Chương 5;Dễ;;Máy chạy bình thường;;
+Chương 5;Dễ;;CPU quá nhiệt;B;
+Chương 5;Dễ;;RAM hỏng;;
+Chương 5;Dễ;;SSD hỏng;;
+Chương 5;Dễ;3;Nếu mainboard không hỗ trợ NVMe:;;0,2
+Chương 5;Dễ;;Không nhận ổ;A;
+Chương 5;Dễ;;Không nhận RAM;;
+Chương 5;Dễ;;Không nhận GPU;;
+Chương 5;Dễ;;SSD cháy;;
+Chương 5;Dễ;4;Nếu dây SATA tiếp xúc không tốt thì:;;0,2
+Chương 5;Dễ;;HDD không nhận;A;
+Chương 5;Dễ;;RAM lỗi;;
+Chương 5;Dễ;;Máy không lên hình;;
+Chương 5;Dễ;;Máy tính không khởi động;;
+Chương 5;Dễ;5;Nếu backup được lưu trên cùng ổ cứng với dữ liệu gốc, rủi ro chính là:;;0,2
+Chương 5;Dễ;;Tốc độ chậm;;
+Chương 5;Dễ;;Mất dữ liệu khi ổ cứng hỏng;B;
+Chương 5;Dễ;;Ổ cứng lỗi;;
+Chương 5;Dễ;;Không phục hồi lại được;;
+Chương 5;Dễ;6;Máy tính bấm nút nguồn nhưng không có tín hiệu gì (quạt không quay). Nguyên nhân có thể là:;;0,2
+Chương 5;Dễ;;RAM lỗi;;
+Chương 5;Dễ;;PSU chưa cấp điện;B;
+Chương 5;Dễ;;GPU lỗi;;
+Chương 5;Dễ;;SSD hỏng;;
+Chương 5;Dễ;7;"Máy không khởi động hệ điều hành Windows sau khi lắp SSD mới.
+Nguyên nhân là gì?";;0,2
+Chương 5;Dễ;;Chưa cài hệ điều hành;A;
+Chương 5;Dễ;;Thiếu RAM;;
+Chương 5;Dễ;;GPU lỗi;;
+Chương 5;Dễ;;CPU lỗi;;
+Chương 5;Dễ;8;Máy khởi động nhưng không nhận SSD NVM-E, nguyên nhân có thể:;;0,2
+Chương 5;Dễ;;Thiếu RAM;;
+Chương 5;Dễ;;Lắp sai khe M.2;B;
+Chương 5;Dễ;;CPU quá nóng;;
+Chương 5;Dễ;;Main hỏng;;
+Chương 5;Dễ;9;Máy bật nhưng tự khởi động lại liên tục, nguyên nhân có thể:;;0,2
+Chương 5;Dễ;;PSU yếu;A;
+Chương 5;Dễ;;Chuột lỗi;;
+Chương 5;Dễ;;HDD lỗi;;
+Chương 5;Dễ;;GPU lỗi;;
+Chương 5;Dễ;10;Máy bật nhưng quạt quay mạnh, không lên hình:;;0,2
+Chương 5;Dễ;;RAM lỗi;A;
+Chương 5;Dễ;;SSD lỗi;;
+Chương 5;Dễ;;CPU lỗi;;
+Chương 5;Dễ;;PSU chưa cấp điện;;
+Chương 5;Dễ;11;Máy bật nhưng không nhận ổ cứng, nguyên nhân có thể là:;;0,2
+Chương 5;Dễ;;SATA chưa cắm;A;
+Chương 5;Dễ;;GPU lỗi;;
+Chương 5;Dễ;;RAM lỗi;;
+Chương 5;Dễ;;CPU lỗi;;
+Chương 5;Dễ;12;Máy bật nguồn nhưng không lên hình, nguyên nhân phổ biến nhất là:;;0,2
+Chương 5;Dễ;;RAM lỏng;A;
+Chương 5;Dễ;;HDD hỏng;;
+Chương 5;Dễ;;Chuột lỗi;;
+Chương 5;Dễ;;SSD lỗi;;
+Chương 5;Dễ;13;Khi lắp RAM có tốc độ bus cao hơn mainboard hỗ trợ thì;;0,2
+Chương 5;Dễ;;RAM chạy với tốc độ bus mà mainboard hỗ trợ.;A;
+Chương 5;Dễ;;RAM chạy với tốc độ bus tối da của nó.;;
+Chương 5;Dễ;;RAM hỏng;;
+Chương 5;Dễ;;Main hỏng;;
+Chương 5;Dễ;14;Khi bật máy, BIOS phát ra 1 tiếng bíp ngắn, điều này thường có nghĩa là:;;0,2
+Chương 5;Dễ;;Lỗi ổ cứng;;
+Chương 5;Dễ;;Lỗi RAM;;
+Chương 5;Dễ;;Hệ thống khởi động bình thường;C;
+Chương 5;Dễ;;BIOS chưa update;;
+Chương 5;Dễ;15;Khe cắm RAM trên mainboard được gọi là gì?;;0,2
+Chương 5;Dễ;;PCIe slot;;
+Chương 5;Dễ;;DIMM slot;B;
+Chương 5;Dễ;;SATA port;;
+Chương 5;Dễ;;CPU socket;;
+Chương 5;Dễ;16;Hiện tượng gì nếu bật máy tính không cắm RAM ?;;0,2
+Chương 5;Dễ;;Máy không boot;A;
+Chương 5;Dễ;;Máy chạy chậm;;
+Chương 5;Dễ;;Máy không khởi động được;;
+Chương 5;Dễ;;Máy không lên hình;;
+Chương 5;Dễ;17;Để cài đặt phần mềm cần quyền:;;0,2
+Chương 5;Dễ;;User;;
+Chương 5;Dễ;;Admin;B;
+Chương 5;Dễ;;Guest;;
+Chương 5;Dễ;;Network;;
+;;;Nhóm câu hỏi ở mức độ VẬN DỤNG (B);;
+Chương 5;Trung bình;1;"Windows không nhận chính xác thiết bị GPU.
+Nguyên nhân:";;0,2
+Chương 5;Trung bình;;Chưa cài driver;A;
+Chương 5;Trung bình;;RAM lỗi;;
+Chương 5;Trung bình;;SSD lỗi;;
+Chương 5;Trung bình;;CPU lỗi;;
+Chương 5;Trung bình;2;"USB không hoạt động sau khi lắp main mới:
+";;0,2
+Chương 5;Trung bình;;Thiếu driver chipset;A;
+Chương 5;Trung bình;;RAM lỗi;;
+Chương 5;Trung bình;;SSD lỗi;;
+Chương 5;Trung bình;;CPU lỗi;;
+Chương 5;Trung bình;3;SSD SATA lắp vào nhưng không xuất hiện ổ đĩa trong hệ điều hành Windows. Nguyên nhân:;;0,2
+Chương 5;Trung bình;;CPU lỗi;;
+Chương 5;Trung bình;;chưa tạo phân vùng;B;
+Chương 5;Trung bình;;mainboard không hỗ trợ NVMe;;
+Chương 5;Trung bình;;BIOS chưa update;;
+Chương 5;Trung bình;4;"RAM bus 3200 MHz lắp vào main hỗ trợ 2666 MHz. Ram sẽ nhận:
+";;0,2
+Chương 5;Trung bình;;2666 MHz;A;
+Chương 5;Trung bình;;3200 MHz;;
+Chương 5;Trung bình;;(2666 + 3200) MHz;;
+Chương 5;Trung bình;;(2666 + 3200)/2 MHz;;
+Chương 5;Trung bình;5;Phần mềm ứng dụng chạy chậm, nguyên nhân có thể là:;;0,2
+Chương 5;Trung bình;;RAM quá nhiều;;
+Chương 5;Trung bình;;SSD lớn;;
+Chương 5;Trung bình;;CPU yếu;C;
+Chương 5;Trung bình;;Chưa tạo phân vùng;;
+Chương 5;Trung bình;6;Nếu máy quá nóng khi chạy nhiều ứng dụng:;;0,2
+Chương 5;Trung bình;;tản nhiệt kém;A;
+Chương 5;Trung bình;;RAM nhỏ;;
+Chương 5;Trung bình;;SSD nhỏ;;
+Chương 5;Trung bình;;PSU mạnh;;
+Chương 5;Trung bình;7;Nếu CPU quá nóng, thiết bị nào cần kiểm tra?;;0,2
+Chương 5;Trung bình;;Quạt CPU;A;
+Chương 5;Trung bình;;RAM;;
+Chương 5;Trung bình;;VGA;;
+Chương 5;Trung bình;;Nguồn;;
+Chương 5;Trung bình;8;Nếu CPU quá nóng, nguyên nhân thường là?;;0,2
+Chương 5;Trung bình;;Thiếu keo tản nhiệt;A;
+Chương 5;Trung bình;;RAM lỗi;;
+Chương 5;Trung bình;;SSD lỗi;;
+Chương 5;Trung bình;;GPU lỗi;;
+Chương 5;Trung bình;9;Máy Windows khởi động vào Safe Mode. Điều này thường dùng để:;;0,2
+Chương 5;Trung bình;;Nguồn PSU không ổn định;;
+Chương 5;Trung bình;;Sửa lỗi hệ thống hoặc driver;B;
+Chương 5;Trung bình;;kiểm tra key bản quyền;;
+Chương 5;Trung bình;;Sửa lỗi ổ cứng đầy;;
+Chương 5;Trung bình;10;"Máy tính treo hoặc tắt khi sử dụng phần mềm xử lý đồ hoạ.
+Nguyên nhân:";;0,2
+Chương 5;Trung bình;;RAM yếu;;
+Chương 5;Trung bình;;SSD nhỏ;;
+Chương 5;Trung bình;;PSU yếu;A;
+Chương 5;Trung bình;;Dùng HDD;;
+Chương 5;Trung bình;11;"Máy tính phát ra ""tiếng bíp dài liên tục khi khởi động"", thường là lỗi gì?";;0,2
+Chương 5;Trung bình;;Lỗi ổ cứng;;
+Chương 5;Trung bình;;Lỗi RAM;B;
+Chương 5;Trung bình;;Lỗi VGA;;
+Chương 5;Trung bình;;Lỗi nguồn;;
+Chương 5;Trung bình;12;Máy tính không lưu được thời gian BIOS sau khi tắt máy, nguyên nhân thường là:;;0,2
+Chương 5;Trung bình;;Lỗi ổ cứng hoặc đầy dữ liệu;;
+Chương 5;Trung bình;;Pin CMOS hết;B;
+Chương 5;Trung bình;;Lỗi driver;;
+Chương 5;Trung bình;;Nguồn không đủ công suất;;
+Chương 5;Trung bình;13;Máy tính boot vào BIOS liên tục. Nguyên nhân có thể là?;;0,2
+Chương 5;Trung bình;;BIOS chưa update;;
+Chương 5;Trung bình;;Quên cắm dây HDMI vào GPU;;
+Chương 5;Trung bình;;Không có ổ boot;C;
+Chương 5;Trung bình;;CPU lỗi;;
+Chương 5;Trung bình;14;Máy tính boot nhưng không vào hệ điều hành Windows, lỗi là?;;0,2
+Chương 5;Trung bình;;SSD chưa cài hệ điều hành;A;
+Chương 5;Trung bình;;GPU lỗi;;
+Chương 5;Trung bình;;RAM lỗi;;
+Chương 5;Trung bình;;RAM không tương thích;;
+Chương 5;Trung bình;15;Máy tính bị treo tạm thời khi mở nhiều ứng dụng. Nguyên nhân có thể?;;0,2
+Chương 5;Trung bình;;Thiếu RAM;A;
+Chương 5;Trung bình;;SSD lỗi;;
+Chương 5;Trung bình;;GPU lỗi;;
+Chương 5;Trung bình;;PSU yếu;;
+Chương 5;Trung bình;16;Máy tính bật nhưng quạt CPU không quay. Nguyên nhân có thể là:;;0,2
+Chương 5;Trung bình;;Chưa cắm dây CPU fan;A;
+Chương 5;Trung bình;;Dây power case cắm sai;;
+Chương 5;Trung bình;;PSU không cấp điện;;
+Chương 5;Trung bình;;RAM lỗi;;
+Chương 5;Trung bình;17;Máy tính bật nhưng BIOS không nhận CPU. Nguyên nhân có thể:;;0,2
+Chương 5;Trung bình;;BIOS chưa update;A;
+Chương 5;Trung bình;;SSD lỗi;;
+Chương 5;Trung bình;;RAM lỗi;;
+Chương 5;Trung bình;;Dây power case cắm sai;;
+Chương 5;Trung bình;18;Máy tính bật nguồn, quạt quay nhưng không lên hình. Nguyên nhân phổ biến nhất:;;0,2
+Chương 5;Trung bình;;RAM lỏng;A;
+Chương 5;Trung bình;;SSD lỗi;;
+Chương 5;Trung bình;;HDD lỗi;;
+Chương 5;Trung bình;;PSU chưa cấp điện;;
+Chương 5;Trung bình;19;Máy tính bật nguồn nhưng tự khởi động lại liên tục, nguyên nhân phần cứng có thể là:;;0,2
+Chương 5;Trung bình;;Lỗi ổ cứng hoặc đầy dữ liệu;;
+Chương 5;Trung bình;;RAM yếu;;
+Chương 5;Trung bình;;Lỗi VGA;;
+Chương 5;Trung bình;;Nguồn yếu hoặc không ổn định;D;
+Chương 5;Trung bình;20;Máy tính bật nguồn nhưng không nghe tiếng bíp POST, nguyên nhân có thể là:;;0,2
+Chương 5;Trung bình;;Không có Loa mainboard;A;
+Chương 5;Trung bình;;RAM hỏng;;
+Chương 5;Trung bình;;Không có ổ cứng;;
+Chương 5;Trung bình;;Không có VGA;;
+Chương 5;Trung bình;21;Máy tính bật lên tự tắt sau 5 giây. Nguyên nhân có thể:;;0,2
+Chương 5;Trung bình;;CPU quá nhiệt;B;
+Chương 5;Trung bình;;SSD lỗi;;
+Chương 5;Trung bình;;RAM lớn;;
+Chương 5;Trung bình;;GPU yếu;;
+Chương 5;Trung bình;22;Máy phát 1 tiếng bíp dài + 2 tiếng bíp ngắn, thường báo lỗi:;;0,2
+Chương 5;Trung bình;;Lỗi ổ cứng;;
+Chương 5;Trung bình;;Lỗi RAM;;
+Chương 5;Trung bình;;Lỗi VGA;C;
+Chương 5;Trung bình;;Lỗi nguồn;;
+Chương 5;Trung bình;23;Máy chạy rất chậm dù CPU mạnh, nguyên nhân có thể:;;0,2
+Chương 5;Trung bình;;Đang dùng HDD;A;
+Chương 5;Trung bình;;GPU yếu;;
+Chương 5;Trung bình;;RAM lỗi;;
+Chương 5;Trung bình;;PSU mạnh;;
+Chương 5;Trung bình;24;Máy chạy chậm dù CPU mạnh, nguyên nhân có thể:;;0,2
+Chương 5;Trung bình;;GPU mạnh;;
+Chương 5;Trung bình;;RAM lớn;;
+Chương 5;Trung bình;;PSU mạnh;;
+Chương 5;Trung bình;;HDD thay vì SSD;D;
+Chương 5;Trung bình;25;"Máy bấm nút nguồn nhưng không có tín hiệu gì, quạt không quay.
+Nguyên nhân có thể là:";;0,2
+Chương 5;Trung bình;;RAM hỏng;;
+Chương 5;Trung bình;;PSU chưa cấp điện;B;
+Chương 5;Trung bình;;SSD lỗi;;
+Chương 5;Trung bình;;GPU lỗi;;
+Chương 5;Trung bình;26;Khi bật máy tính lên bíp liên tục. Nguyên nhân thường là:;;0,2
+Chương 5;Trung bình;;RAM lỗi;A;
+Chương 5;Trung bình;;SSD lỗi;;
+Chương 5;Trung bình;;HDD lỗi;;
+Chương 5;Trung bình;;GPU lỗi;;
+Chương 5;Trung bình;27;"BIOS không nhận SSD NVMe.
+Nguyên nhân có thể:";;0,2
+Chương 5;Trung bình;;mainboard không hỗ trợ NVMe;A;
+Chương 5;Trung bình;;CPU lỗi;;
+Chương 5;Trung bình;;quên cắm dây HDMI vào GPU;;
+Chương 5;Trung bình;;chưa cắm dây CPU fan;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;0,2
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;0,2
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;0,2
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;0,2
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;0,2

@@ -3,42 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luyện tập SEO Web - Đại học Hải Phòng</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Thi Thử SEO WEB (ELC704)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
     <style>
-        :root { --theme-color: #ea580c; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #fffaf0; padding: 20px; line-height: 1.6; margin-top: 60px; }
+        .header-bar { position: fixed; top: 0; left: 0; width: 100%; background: #fd7e14; color: white; padding: 10px 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: flex; justify-content: space-between; align-items: center; z-index: 1000; box-sizing: border-box; }
+        .header-bar h2 { margin: 0; font-size: 18px; text-transform: uppercase; letter-spacing: 1px;}
+        .timer { font-size: 24px; font-weight: bold; background: #343a40; padding: 5px 15px; border-radius: 5px; color: #fff;}
+        .container { max-width: 800px; margin: 20px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid #fd7e14;}
+        .question-block { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px dashed #ddd; }
+        .question-block h3 { margin: 0 0 10px 0; font-size: 16px; color: #d35400; }
+        .options-list { list-style: none; padding: 0; margin: 0; }
+        .options-list li { margin-bottom: 8px; padding: 10px; border-radius: 6px; transition: all 0.2s ease; border: 1px solid transparent;}
+        .options-list li:hover { background: #fff3e0; border-color: #ffd8a8;}
+        label { cursor: pointer; display: flex; align-items: center; gap: 10px; width: 100%; }
+        #submit { display: block; width: 100%; padding: 15px; background: #fd7e14; color: white; border: none; font-size: 18px; border-radius: 5px; cursor: pointer; margin-top: 20px; font-weight: bold; text-transform: uppercase; transition: background 0.3s;}
+        #submit:hover { background: #e67e22; }
+        #result { margin-top: 20px; text-align: center; font-size: 22px; color: #d35400; font-weight: bold; }
+        .btn-back { color: white; text-decoration: none; font-weight: bold; background: rgba(0,0,0,0.2); padding: 6px 12px; border-radius: 4px; transition: background 0.3s;}
+        .btn-back:hover { background: rgba(0,0,0,0.4); }
+        #restart-btn { 
+            display: inline-block; 
+            padding: 12px 25px; 
+            background: #28a745; 
+            color: white; border: none; 
+            font-size: 16px; border-radius: 5px; 
+            cursor: pointer; margin-top: 25px; 
+            font-weight: bold; text-transform: uppercase; transition: background 0.3s;
+        }
+        #restart-btn:hover { background: #218838; }
+
+        /* User Info Styles */
+        .user-info { margin-bottom: 25px; padding: 20px; background: #fff3e0; border-radius: 8px; border: 1px solid #ffd8a8; }
+        .user-info h3 { margin-top: 0; color: #d35400; font-size: 18px; margin-bottom: 15px;}
+        .form-row { display: flex; gap: 15px; margin-bottom: 10px; }
+        .form-group { flex: 1; display: flex; flex-direction: column; }
+        .form-group label { font-weight: bold; color: #555; margin-bottom: 5px; font-size: 14px; }
+        .form-group input { padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; outline: none; transition: border-color 0.3s; }
+        .form-group input:focus { border-color: #fd7e14; }
+
+        /* Donation Section Styles - Theme SEO Web (Orange) */
+        .donation-section {
+            max-width: 800px;
+            margin: 20px auto;
+            background: linear-gradient(to bottom right, white, #fff4e6);
+            border: 1px solid #ffd8a8;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        .donation-section .qr-wrapper { flex-shrink: 0; }
+        .donation-section .qr-container {
+            display: inline-block;
+            padding: 4px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 2px dashed #ffc078;
+        }
+        .donation-section .qr-image-box {
+            background-color: #f8f9fa;
+            width: 160px;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .donation-section .qr-image-box img { width: 100%; height: 100%; object-fit: cover; }
+        .donation-section .donation-text { flex-grow: 1; }
+        .donation-section .donation-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px;
+            background-color: #ffe8cc;
+            color: #d35400;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        .donation-section .donation-title { font-size: 20px; font-weight: bold; color: #333; margin-bottom: 8px; font-style: italic; }
+        .donation-section p { color: #555; font-size: 14px; line-height: 1.6; }
+        .donation-section .donation-cta { margin-top: 12px; font-size: 14px; font-weight: bold; color: #d35400; font-style: italic; }
+        @media (max-width: 768px) {
+            .donation-section { flex-direction: column; text-align: center; gap: 24px; }
+            .container { margin-top: 0; }
+            .form-row { flex-direction: column; }
+        }
     </style>
-    <script src="ads.js"></script>
 </head>
 <body>
+    <div class="header-bar">
+        <a href="index.html" class="btn-back">← Trang chủ</a>
+        <h2>Đề thi: SEO WEB (40 Câu)</h2>
+        <div class="timer" id="timeDisplay">40:00</div>
+    </div>
 
-<div class="sticky-header py-4 px-6">
-    <div class="max-w-4xl mx-auto flex justify-between items-center">
-        <div>
-            <a href="index.html" class="inline-flex items-center text-orange-600 hover:text-orange-800 font-bold mb-2 transition-colors">
-                <i class="fas fa-chevron-left mr-2"></i> Quay lại trang chủ
-            </a>
-            <h1 class="text-xl font-bold text-gray-800 uppercase">Ôn tập: SEO Web</h1>
+    <div class="donation-section">
+        <div class="qr-wrapper">
+            <div class="qr-container">
+                <div class="qr-image-box">
+                    <img src="QRdonate.jpg" alt="Mã QR Ủng hộ" onerror="this.parentElement.innerHTML='<div style=\'padding:1rem; text-align:center; font-size:0.75rem; color:#6c757d; font-weight:500;\'>Lỗi tải ảnh QR<br><small>(Kiểm tra file QRdonate.jpg)</small></div>'">
+                </div>
+            </div>
+        </div>
+        <div class="donation-text">
+            <div class="donation-badge">
+                <i class="fas fa-heart"></i> ỦNG HỘ DUY TRÌ SERVER
+            </div>
+            <p class="donation-title">Đồng hành cùng hệ thống ôn tập</p>
+            <p>Hệ thống vận hành phi lợi nhuận. Mọi đóng góp (mời team cốc cà phê ☕) hoặc <strong>tắt trình chặn quảng cáo</strong> sẽ giúp team có kinh phí duy trì server. Trân trọng cảm ơn sự ủng hộ của các bạn! ❤️</p>
+            <p class="donation-cta">Quét mã QR hoặc click vào quảng cáo để tiếp thêm động lực cho team phát triển nhé!</p>
         </div>
     </div>
-</div>
 
-<main class="max-w-4xl mx-auto p-6 mt-10">
-    <div id="ad-banner-slot" class="mb-6 w-full"></div>
-
-    <div class="bg-white p-12 rounded-2xl shadow-sm border border-gray-200 text-center">
-        <div class="text-orange-500 text-6xl mb-6">
-            <i class="fas fa-tools animate-bounce"></i>
+    <div class="container">
+        <div class="user-info">
+            <h3><i class="fas fa-user-graduate"></i> Thông tin sinh viên</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="student-name">Họ và tên:</label>
+                    <input type="text" id="student-name" placeholder="Nhập họ và tên sinh viên...">
+                </div>
+                <div class="form-group">
+                    <label for="student-class">Lớp:</label>
+                    <input type="text" id="student-class" placeholder="Nhập tên lớp...">
+                </div>
+            </div>
         </div>
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">Hệ Thống Đang Cập Nhật</h2>
-        <p class="text-gray-600 text-lg mb-8">Ngân hàng câu hỏi môn <strong class="text-orange-600">SEO Web</strong> đang được xử lý.<br>Xin vui lòng đợi thi thử vào lúc khác!</p>
-        <a href="index.html" class="inline-block bg-orange-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-orange-700 transition shadow-md">
-            <i class="fas fa-home mr-2"></i> Về lại trang chủ
-        </a>
+        <div id="quiz"></div>
+        <button id="submit">NỘP BÀI</button>
+        <div id="result"></div>
     </div>
-</main>
 
+    <script src="data_seo_web.js"></script>
+    
+    <script>
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        const TOTAL_QUESTIONS = 40;
+        const EXAM_TIME_SECONDS = 40 * 60; // 40 phút
+
+        let examQuestions = shuffleArray([...questionsData]).slice(0, TOTAL_QUESTIONS);
+
+        examQuestions.forEach(q => {
+            let correctAnswerText = q.options[q.ans]; 
+            q.options = shuffleArray([...q.options]); 
+            q.ans = q.options.indexOf(correctAnswerText); 
+        });
+
+        const quizContainer = document.getElementById('quiz');
+        const submitBtn = document.getElementById('submit');
+        const resultDiv = document.getElementById('result');
+        const timeDisplay = document.getElementById('timeDisplay');
+        
+        let timerInterval;
+
+        function renderExam() {
+            examQuestions.forEach((q, index) => {
+                const block = document.createElement('div');
+                block.classList.add('question-block');
+                block.innerHTML = `<h3>Câu ${index + 1}: ${q.q}</h3>`;
+                
+                const ul = document.createElement('ul');
+                ul.classList.add('options-list');
+                
+                q.options.forEach((opt, optIndex) => {
+                    ul.innerHTML += `
+                        <li>
+                            <label>
+                                <input type="radio" name="q${index}" value="${optIndex}">
+                                <span>${opt}</span>
+                            </label>
+                        </li>
+                    `;
+                });
+                block.appendChild(ul);
+                quizContainer.appendChild(block);
+            });
+        }
+
+        function startTimer(duration) {
+            let timer = duration, minutes, seconds;
+            timerInterval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                timeDisplay.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(timerInterval);
+                    alert("Đã hết thời gian làm bài! Hệ thống tự động nộp bài.");
+                    gradeExam();
+                }
+            }, 1000);
+        }
+
+        function gradeExam() {
+            clearInterval(timerInterval); 
+            let score = 0;
+            examQuestions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const options = document.querySelectorAll(`input[name="q${index}"]`);
+                
+                options.forEach(opt => {
+                    const li = opt.closest('li');
+                    if (parseInt(opt.value) === q.ans) {
+                        li.style.color = '#155724'; 
+                        li.style.fontWeight = 'bold';
+                        li.style.background = '#d4edda'; 
+                        li.style.borderColor = '#c3e6cb';
+                    } else if (opt.checked && parseInt(opt.value) !== q.ans) {
+                        li.style.color = '#721c24'; 
+                        li.style.textDecoration = 'line-through';
+                        li.style.background = '#f8d7da'; 
+                        li.style.borderColor = '#f5c6cb';
+                    }
+                    opt.disabled = true; 
+                });
+
+                if (selected && parseInt(selected.value) === q.ans) {
+                    score++;
+                }
+            });
+
+            const studentName = document.getElementById('student-name').value.trim() || 'Sinh viên ẩn danh';
+            const studentClass = document.getElementById('student-class').value.trim() || 'Không rõ lớp';
+            let finalScore = (score * 0.25).toFixed(1);
+            
+            resultDiv.innerHTML = `
+                <div style="font-size: 18px; color: #333; margin-bottom: 15px; border-bottom: 1px dashed #ddd; padding-bottom: 10px;">Sinh viên: <strong>${studentName}</strong> - Lớp: <strong>${studentClass}</strong></div>
+                Hoàn thành! Số câu đúng: ${score}/${TOTAL_QUESTIONS} <br> Điểm của bạn: ${finalScore} / 10 <br>
+                <button onclick="location.reload()" id="restart-btn">LÀM ĐỀ KHÁC</button>
+            `;
+            submitBtn.style.display = 'none';
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); 
+        }
+
+        submitBtn.addEventListener('click', () => {
+            if(confirm("Bạn có chắc chắn muốn nộp bài không?")) {
+                gradeExam();
+            }
+        });
+
+        renderExam();
+        startTimer(EXAM_TIME_SECONDS);
+    </script>
 </body>
 </html>
