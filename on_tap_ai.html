@@ -11,6 +11,10 @@
         :root {
             --theme-color: #6d28d9; /* Đổi mã màu theo mỗi môn thi, ở AI là tím */
         }
+        .correct { background-color: #d4edda !important; border-color: #28a745 !important; }
+        .correct span { color: #155724 !important; font-weight: bold; }
+        .wrong { background-color: #f8d7da !important; border-color: #dc3545 !important; }
+        .wrong span { color: #721c24 !important; text-decoration: line-through; }
     </style>
     <script src="ads.js"></script>
 </head>
@@ -216,16 +220,20 @@
             
             correctMsg.classList.remove('hidden');
             
-            if (selected) {
-                const labelContainer = document.getElementById(`opt-container-${i}-${selected.value}`);
-                if (selected.value === item.a) {
-                    score++;
-                    labelContainer.classList.add('correct');
-                } else {
-                    labelContainer.classList.add('wrong');
+            const options = document.querySelectorAll(`input[name="q${i}"]`);
+            options.forEach(opt => {
+                const labelElement = opt.closest('label');
+                if (opt.value === item.a) {
+                    labelElement.classList.add('correct');
+                } else if (opt.checked && opt.value !== item.a) {
+                    labelElement.classList.add('wrong');
                 }
+                opt.disabled = true; // Khóa các ô đáp án lại sau khi nộp bài
+            });
+
+            if (selected && selected.value === item.a) {
+                score++;
             }
-            document.getElementById(`opt-container-${i}-${item.a}`).classList.add('correct');
         });
 
         document.getElementById('submit-btn').classList.add('hidden');
